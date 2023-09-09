@@ -5,6 +5,8 @@
 
 #include "SDL2/SDL.h"
 
+#include "interfaces/config.h"
+
 void ShowErrorMessage(const char* title, const char* message) {
     std::cerr << message << std::endl;
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, title, message, nullptr);
@@ -35,9 +37,8 @@ bool InitSdl(Uint32 flags) {
 
 bool CreateMainWindow(SDL_Window*& window) {
     bool is_successful = true;
-    // just for debugging
-    int window_width = 2 * kWindowBaseWidth;
-    int window_height = 2 * kWindowBaseHeight;
+    int window_width = WindowScale() * kWindowBaseWidth;
+    int window_height = WindowScale() * kWindowBaseHeight;
     window = SDL_CreateWindow(
         kAppName, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
         window_width, window_height, SDL_WINDOW_SHOWN);
