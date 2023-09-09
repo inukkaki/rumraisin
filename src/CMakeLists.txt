@@ -5,6 +5,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
 add_executable(rumraisin
     main.cc
 
+    interfaces/config.cc
     interfaces/general.cc
 )
 target_compile_features(rumraisin PUBLIC cxx_std_20)
