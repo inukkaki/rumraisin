@@ -4,6 +4,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
 # Target: rumraisin
 add_executable(rumraisin
     main.cc
+
+    interfaces/general.cc
 )
 target_compile_features(rumraisin PUBLIC cxx_std_20)
 target_include_directories(rumraisin
