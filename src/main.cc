@@ -3,6 +3,10 @@
 #include "interfaces/general.h"
 #include "interfaces/winfunc.h"
 
+// just for debugging
+#include <iostream>
+#include "interfaces/timer.h"
+
 int main(int argc, char* argv[]) {
     // Resolve the blurriness of the screen (only for Microsoft Windows)
     ResolveBlurriness();
@@ -16,8 +20,16 @@ int main(int argc, char* argv[]) {
     // MAIN LOOP
     if (initialized_successfully) {
         // just for debugging
-        ShowErrorMessage("Test message", "This is a test!");
-        ShowErrorMessage("Test message 2", "This is a test:", "quotation");
+        int count = 0;
+        SimpleTimer timer;
+        timer.Set();
+        while (count < 5) {
+            if (timer.GetElapsedTime() > 1000) {
+                ++count;
+                timer.Set();
+                std::cout << "1 sec elapsed" << std::endl;
+            }
+        }
     }
 
     // Deallocation
