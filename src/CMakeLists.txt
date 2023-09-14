@@ -7,6 +7,7 @@ add_executable(rumraisin
 
     interfaces/config.cc
     interfaces/general.cc
+    interfaces/timer.cc
     interfaces/winfunc.cc
 )
 target_compile_features(rumraisin PUBLIC cxx_std_20)
