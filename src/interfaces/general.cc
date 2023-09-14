@@ -37,8 +37,9 @@ bool InitSdl(Uint32 flags) {
 
 bool CreateMainWindow(SDL_Window*& window) {
     bool is_successful = true;
-    int window_width = WindowScale() * kWindowBaseWidth;
-    int window_height = WindowScale() * kWindowBaseHeight;
+    int window_scale = GetWindowScale();
+    int window_width = window_scale * kWindowBaseWidth;
+    int window_height = window_scale * kWindowBaseHeight;
     window = SDL_CreateWindow(
         kAppName, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
         window_width, window_height, SDL_WINDOW_SHOWN);

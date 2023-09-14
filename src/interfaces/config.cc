@@ -6,6 +6,6 @@ int window_scale = 2;
 
 }  // namespace
 
-int WindowScale() {
+int GetWindowScale() {
     return window_scale;
 }
