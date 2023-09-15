@@ -5,6 +5,7 @@
 
 // just for debugging
 #include <iostream>
+#include "interfaces/config.h"
 #include "interfaces/timer.h"
 
 int main(int argc, char* argv[]) {
@@ -20,6 +21,8 @@ int main(int argc, char* argv[]) {
     // MAIN LOOP
     if (initialized_successfully) {
         // just for debugging
+        const int& frame_rate = GetFrameRate();
+        std::cout << frame_rate << std::endl;
         int count = 0;
         SimpleTimer timer;
         timer.Set();

@@ -8,4 +8,6 @@ inline constexpr int kWindowBaseHeight = 320;
 
 int GetWindowScale();
 
+const int& GetFrameRate();
+
 #endif  // RUMRAISIN_INTERFACES_CONFIG_H_
