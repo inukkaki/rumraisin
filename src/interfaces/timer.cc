@@ -28,3 +28,26 @@ void FrameRateBalancer::Delay() const {
         SDL_Delay(delay_time);
     }
 }
+
+void FrameRateMeasurer::SetTimer() {
+    timer_.Set();
+}
+
+namespace {
+
+constexpr int kMeasuringPeriod = 1000;  // ms
+
+}  // namespace
+
+bool FrameRateMeasurer::MeasureFrameRate(float& measured_frame_rate) {
+    bool is_executed = false;
+    ++counted_frames_;
+    int elapsed_time = timer_.GetElapsedTime();
+    if (elapsed_time >= kMeasuringPeriod) {
+        is_executed = true;
+        measured_frame_rate = 1000.0f * counted_frames_ / elapsed_time;
+        counted_frames_ = 0;
+        timer_.Set();
+    }
+    return is_executed;
+}

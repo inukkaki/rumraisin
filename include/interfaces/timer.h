@@ -29,4 +29,17 @@ private:
     SimpleTimer timer_;
 };
 
+class FrameRateMeasurer {
+public:
+    FrameRateMeasurer() : counted_frames_(0) {}
+    ~FrameRateMeasurer() {}
+
+    void SetTimer();
+    bool MeasureFrameRate(float& measured_frame_rate);
+
+private:
+    int counted_frames_;
+    SimpleTimer timer_;
+};
+
 #endif  // RUMRAISIN_INTERFACES_TIMER_H_

@@ -22,11 +22,20 @@ int main(int argc, char* argv[]) {
     if (initialized_successfully) {
         // just for debugging
         SimpleTimer timer;
+
         const int& frame_rate = GetFrameRate();
         FrameRateBalancer fr_balancer(frame_rate);
+
+        float measured_frame_rate = 0.0f;
+        FrameRateMeasurer fr_measurer;
+
         timer.Set();
         fr_balancer.SetTimer();
+        fr_measurer.SetTimer();
         while (timer.GetElapsedTime() < 5000) {
+            if (fr_measurer.MeasureFrameRate(measured_frame_rate)) {
+                std::cout << measured_frame_rate << " FPS" << std::endl;
+            }
             fr_balancer.Delay();
             fr_balancer.SetTimer();
         }
