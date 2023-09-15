@@ -21,17 +21,14 @@ int main(int argc, char* argv[]) {
     // MAIN LOOP
     if (initialized_successfully) {
         // just for debugging
-        const int& frame_rate = GetFrameRate();
-        std::cout << frame_rate << std::endl;
-        int count = 0;
         SimpleTimer timer;
+        const int& frame_rate = GetFrameRate();
+        FrameRateBalancer fr_balancer(frame_rate);
         timer.Set();
-        while (count < 5) {
-            if (timer.GetElapsedTime() > 1000) {
-                ++count;
-                timer.Set();
-                std::cout << "1 sec elapsed" << std::endl;
-            }
+        fr_balancer.SetTimer();
+        while (timer.GetElapsedTime() < 5000) {
+            fr_balancer.Delay();
+            fr_balancer.SetTimer();
         }
     }
 
