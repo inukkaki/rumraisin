@@ -6,6 +6,8 @@ inline constexpr char kAppName[] = "rumraisin";
 inline constexpr int kWindowBaseWidth = 400;
 inline constexpr int kWindowBaseHeight = 320;
 
-int WindowScale();
+int GetWindowScale();
+
+const int& GetFrameRate();
 
 #endif  // RUMRAISIN_INTERFACES_CONFIG_H_
