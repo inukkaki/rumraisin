@@ -80,3 +80,7 @@ Vector2D operator/(const Vector2D& lhs, float rhs) {
     Vector2D tmp(lhs.x / rhs, lhs.y / rhs);
     return tmp;
 }
+
+float Dot(const Vector2D& lhs, const Vector2D& rhs) {
+    return lhs.x*rhs.x + lhs.y*rhs.y;
+}

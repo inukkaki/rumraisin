@@ -46,5 +46,12 @@ int main() {
 
     std::cout << "length of vec_1  " << vec_1.Length() << std::endl;
 
+    vec_1.Set(2.1f, 5.7f);
+    vec_2.Set(3.3f, -0.5f);
+    PrintVector2D("vec_1", vec_1);
+    PrintVector2D("vec_2", vec_2);
+
+    std::cout << "Dot(vec_1, vec_2)  " << Dot(vec_1, vec_2) << std::endl;
+
     return 0;
 }
