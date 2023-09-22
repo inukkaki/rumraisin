@@ -5,8 +5,11 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
 add_executable(rumraisin
     main.cc
 
+    controllers/loop.cc
+
     interfaces/config.cc
     interfaces/general.cc
+    interfaces/keyboard.cc
     interfaces/timer.cc
     interfaces/winfunc.cc
 )
