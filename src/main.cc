@@ -17,7 +17,7 @@ int main(int argc, char* argv[]) {
     // MAIN LOOP
     if (initialized_successfully) {
         bool app_is_running = true;
-        MainLoop(app_is_running);
+        MainLoop(app_is_running, renderer);
     }
 
     // Deallocation
