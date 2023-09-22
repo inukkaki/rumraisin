@@ -17,3 +17,4 @@ if(WIN32)
 endif()
 
 add_subdirectory(src)
+add_subdirectory(tests)
