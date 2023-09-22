@@ -13,4 +13,7 @@ struct Vector2D {
     void Set(float u, float v);
 };
 
+Vector2D operator+(const Vector2D& v);
+Vector2D operator-(const Vector2D& v);
+
 #endif  // RUMRAISIN_MODELS_GENERAL_H_
