@@ -10,6 +10,12 @@ void Vector2D::Set(float u, float v) {
     y = v;
 }
 
+Vector2D& Vector2D::operator=(const Vector2D& rhs) {
+    x = rhs.x;
+    y = rhs.y;
+    return *this;
+}
+
 Vector2D operator+(const Vector2D& v) {
     Vector2D tmp(+v.x, +v.y);
     return tmp;

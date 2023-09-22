@@ -29,5 +29,8 @@ int main() {
     PrintVector2D("vec_1 * (-2.0)", vec_1 * (-2.0f));
     PrintVector2D("vec_1 / 5.0", vec_1 / 5.0f);
 
+    vec_1 = vec_2;
+    PrintVector2D("vec_1 = vec_2", vec_1);
+
     return 0;
 }
