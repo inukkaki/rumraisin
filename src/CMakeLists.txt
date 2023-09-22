@@ -12,6 +12,8 @@ add_executable(rumraisin
     interfaces/keyboard.cc
     interfaces/timer.cc
     interfaces/winfunc.cc
+
+    models/general.cc
 )
 target_compile_features(rumraisin PUBLIC cxx_std_20)
 target_include_directories(rumraisin
