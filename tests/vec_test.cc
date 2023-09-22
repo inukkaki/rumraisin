@@ -44,5 +44,7 @@ int main() {
     vec_1 /= 2.5f;
     PrintVector2D("vec_1 /= 2.5", vec_1);
 
+    std::cout << "length of vec_1  " << vec_1.Length() << std::endl;
+
     return 0;
 }

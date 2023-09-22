@@ -12,6 +12,8 @@ struct Vector2D {
     void SetToZeros();
     void Set(float u, float v);
 
+    float Length() const;
+
     Vector2D& operator=(const Vector2D& rhs);
 
     Vector2D& operator+=(const Vector2D& rhs);

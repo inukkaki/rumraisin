@@ -1,5 +1,7 @@
 #include "models/general.h"
 
+#include <cmath>
+
 void Vector2D::SetToZeros() {
     x = 0.0f;
     y = 0.0f;
@@ -8,6 +10,10 @@ void Vector2D::SetToZeros() {
 void Vector2D::Set(float u, float v) {
     x = u;
     y = v;
+}
+
+float Vector2D::Length() const {
+    return std::sqrt(x*x + y*y);
 }
 
 Vector2D& Vector2D::operator=(const Vector2D& rhs) {
