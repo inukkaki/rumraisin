@@ -29,6 +29,9 @@ public:
     }
     ~KeyboardHandler() {}
 
+    void HandleKeyDown(SDL_Keycode key);
+    void HandleKeyUp(SDL_Keycode key);
+
 private:
     std::unordered_map<SDL_KeyCode, int> key_map_;
 
