@@ -34,6 +34,10 @@ public:
 
     void Update();
 
+    bool Presses(KeyCode key_code) const;
+    bool Pressing(KeyCode key_code) const;
+    bool Releases(KeyCode key_code) const;
+
 private:
     std::unordered_map<SDL_KeyCode, int> key_map_;
 

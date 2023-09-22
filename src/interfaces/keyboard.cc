@@ -44,3 +44,30 @@ void KeyboardHandler::Update() {
         is_pressed_previously_[i] = is_pressed_[i];
     }
 }
+
+bool KeyboardHandler::Presses(KeyCode key_code) const {
+    int index = static_cast<int>(key_code);
+    if ((0 <= index) && (index < kNumberOfKeyCodes)) {
+        return is_pressed_[index] && !is_pressed_previously_[index];
+    } else {
+        return false;
+    }
+}
+
+bool KeyboardHandler::Pressing(KeyCode key_code) const {
+    int index = static_cast<int>(key_code);
+    if ((0 <= index) && (index < kNumberOfKeyCodes)) {
+        return is_pressed_[index];
+    } else {
+        return false;
+    }
+}
+
+bool KeyboardHandler::Releases(KeyCode key_code) const {
+    int index = static_cast<int>(key_code);
+    if ((0 <= index) && (index < kNumberOfKeyCodes)) {
+        return !is_pressed_[index] && is_pressed_previously_[index];
+    } else {
+        return false;
+    }
+}
