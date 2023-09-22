@@ -32,5 +32,17 @@ int main() {
     vec_1 = vec_2;
     PrintVector2D("vec_1 = vec_2", vec_1);
 
+    vec_1 += Vector2D(2.5f, -0.6f);
+    PrintVector2D("vec_1 += (2.5, -0.6)", vec_1);
+
+    vec_1 -= Vector2D(2.5f, -0.6f);
+    PrintVector2D("vec_1 -= (2.5, -0.6)", vec_1);
+
+    vec_1 *= 2.5f;
+    PrintVector2D("vec_1 *= 2.5", vec_1);
+
+    vec_1 /= 2.5f;
+    PrintVector2D("vec_1 /= 2.5", vec_1);
+
     return 0;
 }

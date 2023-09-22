@@ -13,6 +13,11 @@ struct Vector2D {
     void Set(float u, float v);
 
     Vector2D& operator=(const Vector2D& rhs);
+
+    Vector2D& operator+=(const Vector2D& rhs);
+    Vector2D& operator-=(const Vector2D& rhs);
+    Vector2D& operator*=(float rhs);
+    Vector2D& operator/=(float rhs);
 };
 
 Vector2D operator+(const Vector2D& v);
