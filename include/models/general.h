@@ -15,5 +15,10 @@ struct Vector2D {
 
 Vector2D operator+(const Vector2D& v);
 Vector2D operator-(const Vector2D& v);
+Vector2D operator+(const Vector2D& lhs, const Vector2D& rhs);
+Vector2D operator-(const Vector2D& lhs, const Vector2D& rhs);
+Vector2D operator*(float lhs, const Vector2D& rhs);
+Vector2D operator*(const Vector2D& lhs, float rhs);
+Vector2D operator/(const Vector2D& lhs, float rhs);
 
 #endif  // RUMRAISIN_MODELS_GENERAL_H_
