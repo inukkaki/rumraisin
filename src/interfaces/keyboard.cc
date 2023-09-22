@@ -38,3 +38,9 @@ void KeyboardHandler::HandleKeyUp(SDL_Keycode key) {
         is_pressed_[index] = false;
     }
 }
+
+void KeyboardHandler::Update() {
+    for (int i = 0; i < kNumberOfKeyCodes; ++i) {
+        is_pressed_previously_[i] = is_pressed_[i];
+    }
+}

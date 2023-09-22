@@ -32,6 +32,8 @@ public:
     void HandleKeyDown(SDL_Keycode key);
     void HandleKeyUp(SDL_Keycode key);
 
+    void Update();
+
 private:
     std::unordered_map<SDL_KeyCode, int> key_map_;
 
