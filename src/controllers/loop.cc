@@ -49,12 +49,10 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
     EResource res;
     res.width = 14.0f;
     res.height = 20.0f;
-    res.r.Set(10.0f, 5.0f);
-    res.v.Set(3.0f, -0.5f);
     res.mass = 10.0f;
-    res.external_force.Set(-10.0f, 20.0f);
     res.air_drag_coefficient = 0.2f;
-    Entity test_entity(res, kBGetGravity, kBGetLinearAirDrag, kBUpdate);
+    Entity test_entity(
+        res, kBControlPlayer, kBGetGravity, kBGetLinearAirDrag, kBUpdate);
     Vector2D test_g(0.0f, 0.1f);
 
     // LOOP
@@ -69,6 +67,7 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
         SDL_RenderClear(renderer);
 
         // just for debugging
+        test_entity.Control(kbd_handler);
         test_entity.GetGravity(test_g);
         test_entity.GetAirDrag();
         test_entity.Update();
