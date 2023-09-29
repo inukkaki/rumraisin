@@ -12,4 +12,13 @@ struct EResource {
     Vector2D a;  // px frame-2
 };
 
+class Entity {
+public:
+    Entity() {}
+    ~Entity() {}
+
+private:
+    EResource res_;
+};
+
 #endif  // RUMRAISIN_MODELS_ENTITY_H_
