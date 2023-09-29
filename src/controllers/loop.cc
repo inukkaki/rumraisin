@@ -8,6 +8,8 @@
 
 // just for debugging
 #include <iostream>
+#include "interfaces/graphics.h"
+#include "models/entity.h"
 
 namespace {
 
@@ -44,8 +46,14 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
     float measured_frame_rate = 0.0f;
 
     // just for debugging
-    KeyCode key_code;
-    SDL_Rect rect;
+    EResource res;
+    res.width = 14.0f;
+    res.height = 20.0f;
+    res.mass = 10.0f;
+    res.air_drag_coefficient = 0.2f;
+    Entity test_entity(
+        res, kBControlPlayer, kBGetGravity, kBGetLinearAirDrag, kBUpdate);
+    Vector2D test_g(0.0f, 0.1f);
 
     // LOOP
     fr_balancer.SetTimer();
@@ -59,22 +67,11 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
         SDL_RenderClear(renderer);
 
         // just for debugging
-        SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-        for (int i = 0; i < kNumberOfKeyCodes; ++i) {
-            key_code = static_cast<KeyCode>(i);
-            if (kbd_handler.Presses(key_code)) {
-                rect = {16 * i, 0, 16, 16};
-                SDL_RenderFillRect(renderer, &rect);
-            }
-            if (kbd_handler.Pressing(key_code)) {
-                rect = {16 * i, 16, 16, 16};
-                SDL_RenderFillRect(renderer, &rect);
-            }
-            if (kbd_handler.Releases(key_code)) {
-                rect = {16 * i, 32, 16, 16};
-                SDL_RenderFillRect(renderer, &rect);
-            }
-        }
+        test_entity.Control(kbd_handler);
+        test_entity.GetGravity(test_g);
+        test_entity.GetAirDrag();
+        test_entity.Update();
+        RenderEntityDebugInfo(renderer, test_entity.res());
 
         // Measure the frame rate
         if (fr_measurer.MeasureFrameRate(measured_frame_rate)) {
