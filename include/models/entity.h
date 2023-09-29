@@ -17,6 +17,9 @@ public:
     Entity() {}
     ~Entity() {}
 
+    // just for debugging
+    EResource& res() { return res_; }
+
 private:
     EResource res_;
 };
