@@ -9,6 +9,7 @@ add_executable(rumraisin
 
     interfaces/config.cc
     interfaces/general.cc
+    interfaces/graphics.cc
     interfaces/keyboard.cc
     interfaces/timer.cc
     interfaces/winfunc.cc
