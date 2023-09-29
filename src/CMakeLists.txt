@@ -13,6 +13,7 @@ add_executable(rumraisin
     interfaces/timer.cc
     interfaces/winfunc.cc
 
+    models/entity.cc
     models/general.cc
 )
 target_compile_features(rumraisin PUBLIC cxx_std_20)
