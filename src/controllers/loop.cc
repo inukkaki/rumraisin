@@ -53,7 +53,8 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
     res.v.Set(3.0f, -0.5f);
     res.mass = 10.0f;
     res.external_force.Set(-10.0f, 20.0f);
-    Entity test_entity(res, kBGetGravity, kBUpdate);
+    res.air_drag_coefficient = 0.2f;
+    Entity test_entity(res, kBGetGravity, kBGetLinearAirDrag, kBUpdate);
     Vector2D test_g(0.0f, 0.1f);
 
     // LOOP
@@ -69,6 +70,7 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
 
         // just for debugging
         test_entity.GetGravity(test_g);
+        test_entity.GetAirDrag();
         test_entity.Update();
         RenderEntityDebugInfo(renderer, test_entity.res());
 

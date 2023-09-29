@@ -13,6 +13,8 @@ struct EResource {
 
     float mass;  // kg
     Vector2D external_force;  // kg px frame-2
+
+    float air_drag_coefficient;
 };
 
 class BGetGravityBehavior {
@@ -30,6 +32,21 @@ public:
 class BGetGravity : public BGetGravityBehavior {
 public:
     void GetGravity(EResource& self, const Vector2D& g) const override;
+};
+
+class BGetAirDragBehavior {
+public:
+    virtual void GetAirDrag(EResource& self) const = 0;
+};
+
+class BNotGetAirDrag : public BGetAirDragBehavior {
+public:
+    void GetAirDrag(EResource& self) const override { /* NO-OP */ }
+};
+
+class BGetLinearAirDrag : public BGetAirDragBehavior {
+public:
+    void GetAirDrag(EResource& self) const override;
 };
 
 class BUpdateBehavior {
@@ -50,6 +67,9 @@ public:
 inline constexpr BNotGetGravity kBNotGetGravity;
 inline constexpr BGetGravity kBGetGravity;
 
+inline constexpr BNotGetAirDrag kBNotGetAirDrag;
+inline constexpr BGetLinearAirDrag kBGetLinearAirDrag;
+
 inline constexpr BNotUpdate kBNotUpdate;
 inline constexpr BUpdate kBUpdate;
 
@@ -57,21 +77,25 @@ class Entity {
 public:
     Entity(EResource res,
            const BGetGravityBehavior& get_gravity,
+           const BGetAirDragBehavior& get_air_drag,
            const BUpdateBehavior& update)
         : res_(res),
           get_gravity_(get_gravity),
+          get_air_drag_(get_air_drag),
           update_(update) {}
     ~Entity() {}
 
     const EResource& res() { return res_; }
 
     void GetGravity(const Vector2D& g);
+    void GetAirDrag();
     void Update();
 
 private:
     EResource res_;
 
     const BGetGravityBehavior& get_gravity_;
+    const BGetAirDragBehavior& get_air_drag_;
     const BUpdateBehavior& update_;
 };
 
