@@ -55,14 +55,15 @@ inline constexpr BUpdate kBUpdate;
 
 class Entity {
 public:
-    Entity(const BGetGravityBehavior& get_gravity,
+    Entity(EResource res,
+           const BGetGravityBehavior& get_gravity,
            const BUpdateBehavior& update)
-        : get_gravity_(get_gravity),
+        : res_(res),
+          get_gravity_(get_gravity),
           update_(update) {}
     ~Entity() {}
 
-    // just for debugging
-    EResource& res() { return res_; }
+    const EResource& res() { return res_; }
 
     void GetGravity(const Vector2D& g);
     void Update();

@@ -46,14 +46,14 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
     float measured_frame_rate = 0.0f;
 
     // just for debugging
-    Entity test_entity(kBGetGravity, kBUpdate);
-    EResource& res = test_entity.res();
+    EResource res;
     res.width = 14.0f;
     res.height = 20.0f;
     res.r.Set(10.0f, 5.0f);
     res.v.Set(3.0f, -0.5f);
     res.mass = 10.0f;
     res.external_force.Set(-10.0f, 20.0f);
+    Entity test_entity(res, kBGetGravity, kBUpdate);
     Vector2D test_g(0.0f, 0.1f);
 
     // LOOP
