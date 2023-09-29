@@ -46,13 +46,13 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
     float measured_frame_rate = 0.0f;
 
     // just for debugging
-    Entity test_entity;
+    Entity test_entity(kBUpdate);
     EResource& res = test_entity.res();
     res.width = 14.0f;
     res.height = 20.0f;
     res.r.Set(10.0f, 5.0f);
-    res.v.Set(1.0f, -0.5f);
-    res.a.Set(-0.1f, 0.2f);
+    res.v.Set(3.0f, -0.5f);
+    res.a.Set(-0.01f, 0.02f);
 
     // LOOP
     fr_balancer.SetTimer();
@@ -66,6 +66,7 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
         SDL_RenderClear(renderer);
 
         // just for debugging
+        test_entity.Update();
         RenderEntityDebugInfo(renderer, test_entity.res());
 
         // Measure the frame rate
