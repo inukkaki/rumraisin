@@ -4,7 +4,7 @@
 
 namespace {
 
-std::array<Tile, kNumberOfTileIDs> tile_dict;
+std::array<Tile, kNumberOfTileIds> tile_dict;
 
 }  // namespace
 
@@ -16,9 +16,9 @@ void SetTileDict() {
 }
 
 const Tile& GetTile(unsigned int tile_id) {
-    if (tile_id < kNumberOfTileIDs) {
+    if (tile_id < kNumberOfTileIds) {
         return tile_dict[tile_id];
     } else {
-        return tile_dict[kUnknownTileID];
+        return tile_dict[kUnknownTileId];
     }
 }

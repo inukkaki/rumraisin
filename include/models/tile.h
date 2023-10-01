@@ -1,9 +1,9 @@
 #ifndef RUMRAISIN_MODELS_TILE_H_
 #define RUMRAISIN_MODELS_TILE_H_
 
-inline constexpr int kNumberOfTileIDs = 3;
+inline constexpr int kNumberOfTileIds = 3;
 
-inline constexpr int kUnknownTileID = 1;
+inline constexpr int kUnknownTileId = 1;
 
 struct Tile {
     // just for debugging

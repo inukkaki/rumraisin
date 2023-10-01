@@ -5,8 +5,8 @@
 
 #include "models/tile.h"
 
-inline constexpr int kFieldMaxWidth = 100;
-inline constexpr int kFieldMaxHeight = 100;
+inline constexpr int kFieldMaxWidth = 22;
+inline constexpr int kFieldMaxHeight = 18;
 
 class Field {
 public:

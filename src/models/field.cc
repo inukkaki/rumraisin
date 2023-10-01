@@ -12,7 +12,7 @@ void Field::Load() {
 }
 
 const Tile& Field::GetCollision(int row, int col) const {
-    unsigned int tile_id = kUnknownTileID;
+    unsigned int tile_id = kUnknownTileId;
     if ((0 <= row) && (row < kFieldMaxHeight)) {
         if ((0 <= col) && (col < kFieldMaxWidth)) {
             tile_id = collision_[row][col];
