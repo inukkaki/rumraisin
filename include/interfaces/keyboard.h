@@ -6,7 +6,7 @@
 
 #include "SDL2/SDL.h"
 
-enum class KeyCode {
+enum class KeyCode : unsigned char {
     kUp,
     kLeft,
     kRight,
