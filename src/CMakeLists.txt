@@ -17,6 +17,7 @@ add_executable(rumraisin
     models/entity.cc
     models/field.cc
     models/general.cc
+    models/tile.cc
 )
 target_compile_features(rumraisin PUBLIC cxx_std_20)
 target_include_directories(rumraisin
