@@ -3,6 +3,8 @@
 
 #include <array>
 
+#include "models/tile.h"
+
 inline constexpr int kFieldMaxWidth = 100;
 inline constexpr int kFieldMaxHeight = 100;
 
@@ -12,6 +14,8 @@ public:
     ~Field() {}
 
     void Load();
+
+    const Tile& GetCollision(int row, int col) const;
 
 private:
     std::array<

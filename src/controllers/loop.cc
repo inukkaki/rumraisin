@@ -63,6 +63,15 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
     }
     Field test_field;
     test_field.Load();
+    std::cout << test_field.GetCollision(0, 0).debug_value << std::endl;
+    std::cout << test_field.GetCollision(
+        kFieldMaxHeight - 1, kFieldMaxWidth - 1).debug_value << std::endl;
+    std::cout << test_field.GetCollision(-1, 0).debug_value << std::endl;
+    std::cout << test_field.GetCollision(0, -1).debug_value << std::endl;
+    std::cout << test_field.GetCollision(
+        kFieldMaxHeight, 0).debug_value << std::endl;
+    std::cout << test_field.GetCollision(
+        0, kFieldMaxWidth).debug_value << std::endl;
 
     // LOOP
     fr_balancer.SetTimer();
