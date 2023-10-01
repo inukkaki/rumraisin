@@ -3,6 +3,7 @@
 #include "controllers/loop.h"
 #include "interfaces/general.h"
 #include "interfaces/winfunc.h"
+#include "models/tile.h"
 
 int main(int argc, char* argv[]) {
     // Resolve the blurriness of the screen (only for Microsoft Windows)
@@ -11,6 +12,8 @@ int main(int argc, char* argv[]) {
     // Initialization
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
+
+    SetTileDict();
 
     bool initialized_successfully = InitGui(window, renderer);
 
