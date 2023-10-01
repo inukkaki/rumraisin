@@ -10,6 +10,7 @@
 #include <iostream>
 #include "interfaces/graphics.h"
 #include "models/entity.h"
+#include "models/field.h"
 #include "models/tile.h"
 
 namespace {
@@ -60,6 +61,8 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
         std::cout << tile_id << ", " << GetTile(tile_id).debug_value
                   << std::endl;
     }
+    Field test_field;
+    test_field.Load();
 
     // LOOP
     fr_balancer.SetTimer();

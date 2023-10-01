@@ -11,6 +11,8 @@ public:
     Field() {}
     ~Field() {}
 
+    void Load();
+
 private:
     std::array<
         std::array<unsigned int, kFieldMaxWidth>,
