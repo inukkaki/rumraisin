@@ -15,6 +15,7 @@ add_executable(rumraisin
     interfaces/winfunc.cc
 
     models/entity.cc
+    models/field.cc
     models/general.cc
 )
 target_compile_features(rumraisin PUBLIC cxx_std_20)
