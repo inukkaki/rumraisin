@@ -56,22 +56,13 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
     Entity test_entity(
         res, kBControlPlayer, kBGetGravity, kBGetLinearAirDrag, kBUpdate);
     Vector2D test_g(0.0f, 0.1f);
-
+    //
     for (unsigned int tile_id = 0; tile_id < 4; ++tile_id) {
         std::cout << tile_id << ", " << GetTile(tile_id).debug_value
                   << std::endl;
     }
     Field test_field;
     test_field.Load();
-    std::cout << test_field.GetCollision(0, 0).debug_value << std::endl;
-    std::cout << test_field.GetCollision(
-        kFieldMaxHeight - 1, kFieldMaxWidth - 1).debug_value << std::endl;
-    std::cout << test_field.GetCollision(-1, 0).debug_value << std::endl;
-    std::cout << test_field.GetCollision(0, -1).debug_value << std::endl;
-    std::cout << test_field.GetCollision(
-        kFieldMaxHeight, 0).debug_value << std::endl;
-    std::cout << test_field.GetCollision(
-        0, kFieldMaxWidth).debug_value << std::endl;
 
     // LOOP
     fr_balancer.SetTimer();
@@ -85,6 +76,8 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
         SDL_RenderClear(renderer);
 
         // just for debugging
+        RenderFieldDebugInfo(renderer, test_field);
+        //
         test_entity.Control(kbd_handler);
         test_entity.GetGravity(test_g);
         test_entity.GetAirDrag();

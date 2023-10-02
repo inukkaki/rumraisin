@@ -9,6 +9,14 @@ void Field::Load() {
             collision_[i][j] = 0;
         }
     }
+    collision_[0][0] = 1;
+    collision_[0][kFieldMaxWidth - 1] = 1;
+    collision_[kFieldMaxHeight - 1][kFieldMaxWidth - 1] = 1;
+    for (int i = kFieldMaxHeight - 5; i < kFieldMaxHeight - 2; ++i) {
+        for (int j = 0; j < kFieldMaxWidth - 2; ++j) {
+            collision_[i][j] = 2;
+        }
+    }
 }
 
 const Tile& Field::GetCollision(int row, int col) const {
