@@ -48,6 +48,8 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
     float measured_frame_rate = 0.0f;
 
     // just for debugging
+    int window_scale = GetWindowScale();
+    //
     EResource res;
     res.width = 14.0f;
     res.height = 20.0f;
@@ -76,13 +78,13 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
         SDL_RenderClear(renderer);
 
         // just for debugging
-        RenderFieldDebugInfo(renderer, test_field);
+        RenderFieldDebugInfo(renderer, test_field, window_scale);
         //
         test_entity.Control(kbd_handler);
         test_entity.GetGravity(test_g);
         test_entity.GetAirDrag();
         test_entity.Update();
-        RenderEntityDebugInfo(renderer, test_entity.res());
+        RenderEntityDebugInfo(renderer, test_entity.res(), window_scale);
 
         // Measure the frame rate
         if (fr_measurer.MeasureFrameRate(measured_frame_rate)) {

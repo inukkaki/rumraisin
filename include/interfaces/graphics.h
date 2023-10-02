@@ -10,8 +10,9 @@ inline constexpr float kVelocityRenderScale = 10.0f;
 inline constexpr float kAccelerationRenderScale = 100.0f;
 
 void RenderEntityDebugInfo(
-        SDL_Renderer* const renderer, const EResource& res);
+        SDL_Renderer* const renderer, const EResource& res, int window_scale);
 
-void RenderFieldDebugInfo(SDL_Renderer* const renderer, const Field& field);
+void RenderFieldDebugInfo(
+        SDL_Renderer* const renderer, const Field& field, int window_scale);
 
 #endif  // RUMRAISIN_INTERFACES_GRAPHICS_H_

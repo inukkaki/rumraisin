@@ -9,8 +9,7 @@
 namespace {
 
 void RenderEntityBoundingBox(
-        SDL_Renderer* const renderer, const EResource& res) {
-    int window_scale = GetWindowScale();
+        SDL_Renderer* const renderer, const EResource& res, int window_scale) {
     SDL_FRect rect = {
         window_scale * res.r.x,
         window_scale * res.r.y,
@@ -21,8 +20,8 @@ void RenderEntityBoundingBox(
     SDL_RenderDrawRectF(renderer, &rect);
 }
 
-void RenderEntityVelocity(SDL_Renderer* const renderer, const EResource& res) {
-    int window_scale = GetWindowScale();
+void RenderEntityVelocity(
+        SDL_Renderer* const renderer, const EResource& res, int window_scale) {
     float x1 = window_scale * (res.r.x + res.width/2);
     float y1 = window_scale * (res.r.y + res.height/2);
     float x2 = x1 + window_scale*kVelocityRenderScale*res.v.x;
@@ -32,8 +31,7 @@ void RenderEntityVelocity(SDL_Renderer* const renderer, const EResource& res) {
 }
 
 void RenderEntityAcceleration(
-        SDL_Renderer* const renderer, const EResource& res) {
-    int window_scale = GetWindowScale();
+        SDL_Renderer* const renderer, const EResource& res, int window_scale) {
     float x1 = window_scale * (res.r.x + res.width/2);
     float y1 = window_scale * (res.r.y + res.height/2);
     float x2 = x1 + window_scale*kAccelerationRenderScale*res.a.x;
@@ -45,16 +43,16 @@ void RenderEntityAcceleration(
 }  // namespace
 
 void RenderEntityDebugInfo(
-        SDL_Renderer* const renderer, const EResource& res) {
-    RenderEntityBoundingBox(renderer, res);
-    RenderEntityVelocity(renderer, res);
-    RenderEntityAcceleration(renderer, res);
+        SDL_Renderer* const renderer, const EResource& res, int window_scale) {
+    RenderEntityBoundingBox(renderer, res, window_scale);
+    RenderEntityVelocity(renderer, res, window_scale);
+    RenderEntityAcceleration(renderer, res, window_scale);
 }
 
-void RenderFieldDebugInfo(SDL_Renderer* const renderer, const Field& field) {
+void RenderFieldDebugInfo(
+        SDL_Renderer* const renderer, const Field& field, int window_scale) {
     // just for debugging
     int value;
-    int window_scale = GetWindowScale();
     SDL_Rect rect;
     for (int i = 0; i < kFieldMaxHeight; ++i) {
         for (int j = 0; j < kFieldMaxWidth; ++j) {
