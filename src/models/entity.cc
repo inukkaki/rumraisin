@@ -29,6 +29,10 @@ void BAddForceToA::UpdateA(EResource& self) const {
     self.external_force.SetToZeros();
 }
 
+void BAddAToV::UpdateV(EResource& self) const {
+    self.v += self.a;
+}
+
 void BUpdate::Update(EResource& self) const {
     self.a = self.external_force / self.mass;
     self.external_force.SetToZeros();
@@ -50,6 +54,10 @@ void Entity::GetAirDrag() {
 
 void Entity::UpdateA() {
     update_a_.UpdateA(res_);
+}
+
+void Entity::UpdateV() {
+    update_v_.UpdateV(res_);
 }
 
 void Entity::Update() {

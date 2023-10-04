@@ -97,6 +97,24 @@ public:
 inline constexpr BNotUpdateA kBNotUpdateA;
 inline constexpr BAddForceToA kBAddForceToA;
 
+class BUpdateVBehavior {
+public:
+    virtual void UpdateV(EResource& self) const = 0;
+};
+
+class BNotUpdateV : public BUpdateVBehavior {
+public:
+    void UpdateV(EResource& self) const override { /* NO-OP */ }
+};
+
+class BAddAToV : public BUpdateVBehavior {
+public:
+    void UpdateV(EResource& self) const override;
+};
+
+inline constexpr BNotUpdateV kBNotUpdateV;
+inline constexpr BAddAToV kBAddAToV;
+
 class BUpdateBehavior {
 public:
     virtual void Update(EResource& self) const = 0;
@@ -122,12 +140,14 @@ public:
            const BGetGravityBehavior& get_gravity,
            const BGetAirDragBehavior& get_air_drag,
            const BUpdateABehavior& update_a,
+           const BUpdateVBehavior& update_v,
            const BUpdateBehavior& update)
         : res_(res),
           control_(control),
           get_gravity_(get_gravity),
           get_air_drag_(get_air_drag),
           update_a_(update_a),
+          update_v_(update_v),
           update_(update) {}
     ~Entity() {}
 
@@ -137,6 +157,7 @@ public:
     void GetGravity(const Vector2D& g);
     void GetAirDrag();
     void UpdateA();
+    void UpdateV();
     void Update();
 
 private:
@@ -146,6 +167,7 @@ private:
     const BGetGravityBehavior& get_gravity_;
     const BGetAirDragBehavior& get_air_drag_;
     const BUpdateABehavior& update_a_;
+    const BUpdateVBehavior& update_v_;
     const BUpdateBehavior& update_;
 };
 
