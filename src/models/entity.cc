@@ -3,6 +3,10 @@
 #include "interfaces/keyboard.h"
 #include "models/field.h"
 
+// just for debugging
+#include <iostream>
+#include <cmath>
+
 void BControlPlayer::Control(
         EResource& self, const KeyboardHandler& kbd_handler) const {
     // just for debugging
@@ -36,6 +40,13 @@ void BAddAToV::UpdateV(EResource& self) const {
 
 void BMeetField::MeetField(EResource& self, const Field& field) const {
     // TODO: Implement this!
+    // just for debugging
+    int row = static_cast<int>(std::floor(self.r.y / 16));
+    int col = static_cast<int>(std::floor(self.r.x / 16));
+    std::cout << row << ", " << col << ", "
+              << static_cast<int>(field.GetTileCollisionId(row, col)) << ", "
+              << field.GetCollision(row, col).debug_value
+              << std::endl;
 }
 
 void BAddVToR::UpdateR(EResource& self) const {

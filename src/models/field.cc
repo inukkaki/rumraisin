@@ -28,3 +28,7 @@ const Tile& Field::GetCollision(int row, int col) const {
     }
     return GetTile(tile_id);
 }
+
+TileCollisionId Field::GetTileCollisionId(int row, int col) const {
+    return GetCollision(row, col).coll_id;
+}
