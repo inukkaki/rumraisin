@@ -1,6 +1,7 @@
 #include "models/entity.h"
 
 #include "interfaces/keyboard.h"
+#include "models/field.h"
 
 void BControlPlayer::Control(
         EResource& self, const KeyboardHandler& kbd_handler) const {
@@ -55,6 +56,10 @@ void Entity::UpdateA() {
 
 void Entity::UpdateV() {
     update_v_.UpdateV(res_);
+}
+
+void Entity::MeetField(const Field& field) {
+    meet_field_.MeetField(res_, field);
 }
 
 void Entity::UpdateR() {

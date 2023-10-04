@@ -2,6 +2,7 @@
 #define RUMRAISIN_MODELS_ENTITY_H_
 
 #include "interfaces/keyboard.h"
+#include "models/field.h"
 #include "models/general.h"
 
 struct EResource {
@@ -115,6 +116,20 @@ public:
 inline constexpr BNotUpdateV kBNotUpdateV;
 inline constexpr BAddAToV kBAddAToV;
 
+class BMeetFieldBehavior {
+public:
+    virtual void MeetField(EResource& self, const Field& field) const = 0;
+};
+
+class BNotMeetField : public BMeetFieldBehavior {
+public:
+    void MeetField(EResource& self, const Field& field) const override {
+        /* NO-OP */
+    }
+};
+
+inline constexpr BNotMeetField kBNotMeetField;
+
 class BUpdateRBehavior {
 public:
     virtual void UpdateR(EResource& self) const = 0;
@@ -141,6 +156,7 @@ public:
            const BGetAirDragBehavior& get_air_drag,
            const BUpdateABehavior& update_a,
            const BUpdateVBehavior& update_v,
+           const BMeetFieldBehavior& meet_field,
            const BUpdateRBehavior& update_r)
         : res_(res),
           control_(control),
@@ -148,6 +164,7 @@ public:
           get_air_drag_(get_air_drag),
           update_a_(update_a),
           update_v_(update_v),
+          meet_field_(meet_field),
           update_r_(update_r) {}
     ~Entity() {}
 
@@ -158,6 +175,7 @@ public:
     void GetAirDrag();
     void UpdateA();
     void UpdateV();
+    void MeetField(const Field& field);
     void UpdateR();
 
 private:
@@ -168,6 +186,7 @@ private:
     const BGetAirDragBehavior& get_air_drag_;
     const BUpdateABehavior& update_a_;
     const BUpdateVBehavior& update_v_;
+    const BMeetFieldBehavior& meet_field_;
     const BUpdateRBehavior& update_r_;
 };
 
