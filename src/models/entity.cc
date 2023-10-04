@@ -37,13 +37,6 @@ void BAddVToR::UpdateR(EResource& self) const {
     self.r += self.v;
 }
 
-void BUpdate::Update(EResource& self) const {
-    self.a = self.external_force / self.mass;
-    self.external_force.SetToZeros();
-    self.v += self.a;
-    self.r += self.v;
-}
-
 void Entity::Control(const KeyboardHandler& kbd_handler) {
     control_.Control(res_, kbd_handler);
 }
@@ -66,8 +59,4 @@ void Entity::UpdateV() {
 
 void Entity::UpdateR() {
     update_r_.UpdateR(res_);
-}
-
-void Entity::Update() {
-    update_.Update(res_);
 }

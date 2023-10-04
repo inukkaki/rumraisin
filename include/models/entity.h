@@ -133,24 +133,6 @@ public:
 inline constexpr BNotUpdateR kBNotUpdateR;
 inline constexpr BAddVToR kBAddVToR;
 
-class BUpdateBehavior {
-public:
-    virtual void Update(EResource& self) const = 0;
-};
-
-class BNotUpdate : public BUpdateBehavior {
-public:
-    void Update(EResource& self) const override { /* NO-OP */ }
-};
-
-class BUpdate : public BUpdateBehavior {
-public:
-    void Update(EResource& self) const override;
-};
-
-inline constexpr BNotUpdate kBNotUpdate;
-inline constexpr BUpdate kBUpdate;
-
 class Entity {
 public:
     Entity(EResource res,
@@ -159,16 +141,14 @@ public:
            const BGetAirDragBehavior& get_air_drag,
            const BUpdateABehavior& update_a,
            const BUpdateVBehavior& update_v,
-           const BUpdateRBehavior& update_r,
-           const BUpdateBehavior& update)
+           const BUpdateRBehavior& update_r)
         : res_(res),
           control_(control),
           get_gravity_(get_gravity),
           get_air_drag_(get_air_drag),
           update_a_(update_a),
           update_v_(update_v),
-          update_r_(update_r),
-          update_(update) {}
+          update_r_(update_r) {}
     ~Entity() {}
 
     const EResource& res() { return res_; }
@@ -179,7 +159,6 @@ public:
     void UpdateA();
     void UpdateV();
     void UpdateR();
-    void Update();
 
 private:
     EResource res_;
@@ -190,7 +169,6 @@ private:
     const BUpdateABehavior& update_a_;
     const BUpdateVBehavior& update_v_;
     const BUpdateRBehavior& update_r_;
-    const BUpdateBehavior& update_;
 };
 
 #endif  // RUMRAISIN_MODELS_ENTITY_H_
