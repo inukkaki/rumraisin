@@ -61,7 +61,8 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
     Vector2D test_g(0.0f, 0.1f);
     //
     for (unsigned int tile_id = 0; tile_id < 4; ++tile_id) {
-        std::cout << tile_id << ", " << GetTile(tile_id).debug_value
+        std::cout << tile_id << ", " << GetTile(tile_id).debug_value << ", "
+                  << static_cast<int>(GetTile(tile_id).coll_id)
                   << std::endl;
     }
     Field test_field;

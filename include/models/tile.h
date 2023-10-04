@@ -5,7 +5,14 @@ inline constexpr int kNumberOfTileIds = 3;
 
 inline constexpr int kUnknownTileId = 1;
 
+enum class TileCollisionId : unsigned char {
+    kNone,
+    kSolid,
+};
+
 struct Tile {
+    TileCollisionId coll_id;
+
     // just for debugging
     int debug_value;
 };
