@@ -33,6 +33,10 @@ void BAddAToV::UpdateV(EResource& self) const {
     self.v += self.a;
 }
 
+void BAddVToR::UpdateR(EResource& self) const {
+    self.r += self.v;
+}
+
 void BUpdate::Update(EResource& self) const {
     self.a = self.external_force / self.mass;
     self.external_force.SetToZeros();
@@ -58,6 +62,10 @@ void Entity::UpdateA() {
 
 void Entity::UpdateV() {
     update_v_.UpdateV(res_);
+}
+
+void Entity::UpdateR() {
+    update_r_.UpdateR(res_);
 }
 
 void Entity::Update() {

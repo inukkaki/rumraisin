@@ -115,6 +115,24 @@ public:
 inline constexpr BNotUpdateV kBNotUpdateV;
 inline constexpr BAddAToV kBAddAToV;
 
+class BUpdateRBehavior {
+public:
+    virtual void UpdateR(EResource& self) const = 0;
+};
+
+class BNotUpdateR : public BUpdateRBehavior {
+public:
+    void UpdateR(EResource& self) const override { /* NO-OP */ }
+};
+
+class BAddVToR : public BUpdateRBehavior {
+public:
+    void UpdateR(EResource& self) const override;
+};
+
+inline constexpr BNotUpdateR kBNotUpdateR;
+inline constexpr BAddVToR kBAddVToR;
+
 class BUpdateBehavior {
 public:
     virtual void Update(EResource& self) const = 0;
@@ -141,6 +159,7 @@ public:
            const BGetAirDragBehavior& get_air_drag,
            const BUpdateABehavior& update_a,
            const BUpdateVBehavior& update_v,
+           const BUpdateRBehavior& update_r,
            const BUpdateBehavior& update)
         : res_(res),
           control_(control),
@@ -148,6 +167,7 @@ public:
           get_air_drag_(get_air_drag),
           update_a_(update_a),
           update_v_(update_v),
+          update_r_(update_r),
           update_(update) {}
     ~Entity() {}
 
@@ -158,6 +178,7 @@ public:
     void GetAirDrag();
     void UpdateA();
     void UpdateV();
+    void UpdateR();
     void Update();
 
 private:
@@ -168,6 +189,7 @@ private:
     const BGetAirDragBehavior& get_air_drag_;
     const BUpdateABehavior& update_a_;
     const BUpdateVBehavior& update_v_;
+    const BUpdateRBehavior& update_r_;
     const BUpdateBehavior& update_;
 };
 
