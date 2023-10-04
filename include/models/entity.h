@@ -128,7 +128,13 @@ public:
     }
 };
 
+class BMeetField : public BMeetFieldBehavior {
+public:
+    void MeetField(EResource& self, const Field& field) const override;
+};
+
 inline constexpr BNotMeetField kBNotMeetField;
+inline constexpr BMeetField kBMeetField;
 
 class BUpdateRBehavior {
 public:

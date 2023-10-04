@@ -34,6 +34,10 @@ void BAddAToV::UpdateV(EResource& self) const {
     self.v += self.a;
 }
 
+void BMeetField::MeetField(EResource& self, const Field& field) const {
+    // TODO: Implement this!
+}
+
 void BAddVToR::UpdateR(EResource& self) const {
     self.r += self.v;
 }
