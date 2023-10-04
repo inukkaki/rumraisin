@@ -24,6 +24,11 @@ void BGetLinearAirDrag::GetAirDrag(EResource& self) const {
     self.external_force -= self.air_drag_coefficient * self.v;
 }
 
+void BAddForceToA::UpdateA(EResource& self) const {
+    self.a = self.external_force / self.mass;
+    self.external_force.SetToZeros();
+}
+
 void BUpdate::Update(EResource& self) const {
     self.a = self.external_force / self.mass;
     self.external_force.SetToZeros();
@@ -41,6 +46,10 @@ void Entity::GetGravity(const Vector2D& g) {
 
 void Entity::GetAirDrag() {
     get_air_drag_.GetAirDrag(res_);
+}
+
+void Entity::UpdateA() {
+    update_a_.UpdateA(res_);
 }
 
 void Entity::Update() {

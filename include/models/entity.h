@@ -38,6 +38,9 @@ public:
                  const KeyboardHandler& kbd_handler) const override;
 };
 
+inline constexpr BNotControl kBNotControl;
+inline constexpr BControlPlayer kBControlPlayer;
+
 class BGetGravityBehavior {
 public:
     virtual void GetGravity(EResource& self, const Vector2D& g) const = 0;
@@ -55,6 +58,9 @@ public:
     void GetGravity(EResource& self, const Vector2D& g) const override;
 };
 
+inline constexpr BNotGetGravity kBNotGetGravity;
+inline constexpr BGetGravity kBGetGravity;
+
 class BGetAirDragBehavior {
 public:
     virtual void GetAirDrag(EResource& self) const = 0;
@@ -69,6 +75,27 @@ class BGetLinearAirDrag : public BGetAirDragBehavior {
 public:
     void GetAirDrag(EResource& self) const override;
 };
+
+inline constexpr BNotGetAirDrag kBNotGetAirDrag;
+inline constexpr BGetLinearAirDrag kBGetLinearAirDrag;
+
+class BUpdateABehavior {
+public:
+    virtual void UpdateA(EResource& self) const = 0;
+};
+
+class BNotUpdateA : public BUpdateABehavior {
+public:
+    void UpdateA(EResource& self) const override { /* NO-OP */ }
+};
+
+class BAddForceToA : public BUpdateABehavior {
+public:
+    void UpdateA(EResource& self) const override;
+};
+
+inline constexpr BNotUpdateA kBNotUpdateA;
+inline constexpr BAddForceToA kBAddForceToA;
 
 class BUpdateBehavior {
 public:
@@ -85,15 +112,6 @@ public:
     void Update(EResource& self) const override;
 };
 
-inline constexpr BNotControl kBNotControl;
-inline constexpr BControlPlayer kBControlPlayer;
-
-inline constexpr BNotGetGravity kBNotGetGravity;
-inline constexpr BGetGravity kBGetGravity;
-
-inline constexpr BNotGetAirDrag kBNotGetAirDrag;
-inline constexpr BGetLinearAirDrag kBGetLinearAirDrag;
-
 inline constexpr BNotUpdate kBNotUpdate;
 inline constexpr BUpdate kBUpdate;
 
@@ -103,11 +121,13 @@ public:
            const BControlBehavior& control,
            const BGetGravityBehavior& get_gravity,
            const BGetAirDragBehavior& get_air_drag,
+           const BUpdateABehavior& update_a,
            const BUpdateBehavior& update)
         : res_(res),
           control_(control),
           get_gravity_(get_gravity),
           get_air_drag_(get_air_drag),
+          update_a_(update_a),
           update_(update) {}
     ~Entity() {}
 
@@ -116,6 +136,7 @@ public:
     void Control(const KeyboardHandler& kbd_handler);
     void GetGravity(const Vector2D& g);
     void GetAirDrag();
+    void UpdateA();
     void Update();
 
 private:
@@ -124,6 +145,7 @@ private:
     const BControlBehavior& control_;
     const BGetGravityBehavior& get_gravity_;
     const BGetAirDragBehavior& get_air_drag_;
+    const BUpdateABehavior& update_a_;
     const BUpdateBehavior& update_;
 };
 

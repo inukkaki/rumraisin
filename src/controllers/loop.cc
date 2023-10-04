@@ -56,7 +56,8 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
     res.mass = 10.0f;
     res.air_drag_coefficient = 0.2f;
     Entity test_entity(
-        res, kBControlPlayer, kBGetGravity, kBGetLinearAirDrag, kBUpdate);
+        res, kBControlPlayer, kBGetGravity, kBGetLinearAirDrag, kBAddForceToA,
+        kBUpdate);
     Vector2D test_g(0.0f, 0.1f);
     //
     for (unsigned int tile_id = 0; tile_id < 4; ++tile_id) {
@@ -83,7 +84,7 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
         test_entity.Control(kbd_handler);
         test_entity.GetGravity(test_g);
         test_entity.GetAirDrag();
-        test_entity.Update();
+        test_entity.UpdateA();
         RenderEntityDebugInfo(renderer, test_entity.res(), window_scale);
 
         // Measure the frame rate
