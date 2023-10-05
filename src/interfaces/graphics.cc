@@ -79,6 +79,19 @@ void RenderEntityVelocityOnCorners(
     }
 }
 
+void RenderFieldGrid(
+        SDL_Renderer* const renderer, int row, int col, Uint8 r, Uint8 g,
+        Uint8 b, Uint8 a, int window_scale) {
+    SDL_Rect rect = {
+        window_scale * kGridUnit * col,
+        window_scale * kGridUnit * row,
+        window_scale * kGridUnit,
+        window_scale * kGridUnit
+    };
+    SDL_SetRenderDrawColor(renderer, r, g, b, a);
+    SDL_RenderDrawRect(renderer, &rect);
+}
+
 }  // namespace
 
 void RenderEntityCollisionInfo(
@@ -92,31 +105,31 @@ void RenderFieldDebugInfo(
         SDL_Renderer* const renderer, const Field& field, int window_scale) {
     // just for debugging
     int value;
-    SDL_Rect rect;
+    Uint8 r, g, b;
     for (int i = 0; i < kFieldMaxHeight; ++i) {
         for (int j = 0; j < kFieldMaxWidth; ++j) {
             value = field.GetCollision(i, j).debug_value;
             if (value == 100) {
                 continue;
             }
-            rect = {
-                window_scale * kGridUnit * j,
-                window_scale * kGridUnit * i,
-                window_scale * kGridUnit,
-                window_scale * kGridUnit
-            };
             switch (value) {
             case 101:
-                SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF);
+                r = 0xFF;
+                g = 0x00;
+                b = 0x00;
                 break;
             case 102:
-                SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+                r = 0xFF;
+                g = 0xFF;
+                b = 0xFF;
                 break;
             default:
-                SDL_SetRenderDrawColor(renderer, 0x80, 0x80, 0x80, 0xFF);
+                r = 0x80;
+                g = 0x80;
+                b = 0x80;
                 break;
             }
-            SDL_RenderDrawRect(renderer, &rect);
+            RenderFieldGrid(renderer, i, j, r, g, b, 0xFF, window_scale);
         }
     }
 }
