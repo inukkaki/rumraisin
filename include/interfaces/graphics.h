@@ -6,10 +6,12 @@
 #include "models/entity.h"
 #include "models/field.h"
 
-inline constexpr float kVelocityRenderScale = 10.0f;
-inline constexpr float kAccelerationRenderScale = 100.0f;
+inline constexpr float kVelocityRenderScale = 1.0f;
+inline constexpr float kAccelerationRenderScale = 60.0f;
 
 void RenderEntityDebugInfo(
+        SDL_Renderer* const renderer, const EResource& res, int window_scale);
+void RenderEntityCollisionInfo(
         SDL_Renderer* const renderer, const EResource& res, int window_scale);
 
 void RenderFieldDebugInfo(

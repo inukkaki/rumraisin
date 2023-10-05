@@ -89,7 +89,8 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
         test_entity.UpdateV();
         test_entity.MeetField(test_field);
         test_entity.UpdateR();
-        RenderEntityDebugInfo(renderer, test_entity.res(), window_scale);
+        //RenderEntityDebugInfo(renderer, test_entity.res(), window_scale);
+        RenderEntityCollisionInfo(renderer, test_entity.res(), window_scale);
 
         // Measure the frame rate
         if (fr_measurer.MeasureFrameRate(measured_frame_rate)) {

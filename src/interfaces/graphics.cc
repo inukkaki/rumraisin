@@ -49,6 +49,45 @@ void RenderEntityDebugInfo(
     RenderEntityAcceleration(renderer, res, window_scale);
 }
 
+namespace {
+
+void RenderEntityVelocityOnCorners(
+        SDL_Renderer* const renderer, const EResource& res, int window_scale) {
+    float x, y;
+    float w = window_scale * kVelocityRenderScale * res.v.x;
+    float h = window_scale * kVelocityRenderScale * res.v.y;
+    SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0x00, 0xFF);
+    if ((w < 0.0f) || (h < 0.0f)) {
+        x = window_scale * res.r.x;
+        y = window_scale * res.r.y;
+        SDL_RenderDrawLineF(renderer, x, y, x + w, y + h);
+    }
+    if ((w > 0.0f) || (h < 0.0f)) {
+        x = window_scale * (res.r.x + res.width);
+        y = window_scale * res.r.y;
+        SDL_RenderDrawLineF(renderer, x, y, x + w, y + h);
+    }
+    if ((w < 0.0f) || (h > 0.0f)) {
+        x = window_scale * res.r.x;
+        y = window_scale * (res.r.y + res.height);
+        SDL_RenderDrawLineF(renderer, x, y, x + w, y + h);
+    }
+    if ((w > 0.0f) || (h > 0.0f)) {
+        x = window_scale * (res.r.x + res.width);
+        y = window_scale * (res.r.y + res.height);
+        SDL_RenderDrawLineF(renderer, x, y, x + w, y + h);
+    }
+}
+
+}  // namespace
+
+void RenderEntityCollisionInfo(
+        SDL_Renderer* const renderer, const EResource& res, int window_scale) {
+    RenderEntityBoundingBox(renderer, res, window_scale);
+    RenderEntityVelocityOnCorners(renderer, res, window_scale);
+    RenderEntityAcceleration(renderer, res, window_scale);
+}
+
 void RenderFieldDebugInfo(
         SDL_Renderer* const renderer, const Field& field, int window_scale) {
     // just for debugging
