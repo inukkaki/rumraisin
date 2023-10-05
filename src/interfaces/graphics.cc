@@ -61,10 +61,10 @@ void RenderFieldDebugInfo(
                 continue;
             }
             rect = {
-                window_scale * 16 * j,
-                window_scale * 16 * i,
-                window_scale * 16,
-                window_scale * 16
+                window_scale * kGridUnit * j,
+                window_scale * kGridUnit * i,
+                window_scale * kGridUnit,
+                window_scale * kGridUnit
             };
             switch (value) {
             case 101:
