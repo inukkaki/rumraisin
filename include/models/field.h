@@ -17,8 +17,6 @@ public:
 
     const Tile& GetCollision(int row, int col) const;
 
-    TileCollisionId GetTileCollisionId(int row, int col) const;
-
 private:
     std::array<
         std::array<unsigned int, kFieldMaxWidth>,

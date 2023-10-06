@@ -44,7 +44,7 @@ namespace {
 bool CollideWithGridsBelow(
         EResource& res, const Field& field, int row, int col) {
     bool collides = false;
-    switch (field.GetTileCollisionId(row, col)) {
+    switch (field.GetCollision(row, col).coll_id) {
     case TileCollisionId::kNone:
         break;
     case TileCollisionId::kSolid: {
