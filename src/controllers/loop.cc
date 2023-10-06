@@ -51,13 +51,15 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
     int window_scale = GetWindowScale();
     //
     EResource res;
+    res.r.x = 100.0f;
+    res.r.y = 26.0f;
     res.width = 14.0f;
     res.height = 20.0f;
     res.mass = 10.0f;
     res.air_drag_coefficient = 0.2f;
     Entity test_entity(
         res, kBControlPlayer, kBGetGravity, kBGetLinearAirDrag, kBAddForceToA,
-        kBAddAToV, kBMeetField, kBAddVToR);
+        kBAddAToV, kBMeetField, kBNotUpdateR);
     Vector2D test_g(0.0f, 0.1f);
     //
     for (unsigned int tile_id = 0; tile_id < 4; ++tile_id) {
