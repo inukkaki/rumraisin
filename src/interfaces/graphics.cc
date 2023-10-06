@@ -92,12 +92,18 @@ void RenderFieldGrid(
     SDL_RenderDrawRect(renderer, &rect);
 }
 
+void RenderDetectedGrids(
+        SDL_Renderer* const renderer, const EResource& res, int window_scale) {
+    // TODO: Implement this!
+}
+
 }  // namespace
 
 void RenderEntityCollisionInfo(
         SDL_Renderer* const renderer, const EResource& res, int window_scale) {
     RenderEntityBoundingBox(renderer, res, window_scale);
     RenderEntityVelocityOnCorners(renderer, res, window_scale);
+    RenderDetectedGrids(renderer, res, window_scale);
     RenderEntityAcceleration(renderer, res, window_scale);
 }
 
