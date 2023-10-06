@@ -1,11 +1,12 @@
 #include "models/entity.h"
 
+#include <algorithm>
+#include <cassert>
+#include <cmath>
+
+#include "interfaces/config.h"
 #include "interfaces/keyboard.h"
 #include "models/field.h"
-
-// just for debugging
-#include <iostream>
-#include <cmath>
 
 void BControlPlayer::Control(
         EResource& self, const KeyboardHandler& kbd_handler) const {
@@ -38,15 +39,75 @@ void BAddAToV::UpdateV(EResource& self) const {
     self.v += self.a;
 }
 
+namespace {
+
+bool CollideWithGridsBelow(
+        EResource& res, const Field& field, int row, int col) {
+    bool collides = false;
+    switch (field.GetTileCollisionId(row, col)) {
+    case TileCollisionId::kNone:
+        break;
+    case TileCollisionId::kSolid: {
+        int anchor_y = res.r.y + res.height;
+        int floor_y = kGridUnit * row;
+        if ((anchor_y <= floor_y) && (floor_y <= anchor_y + res.v.y)) {
+            res.v.y = floor_y - anchor_y;
+        }
+        break;
+    }
+    default:
+        break;
+    }
+    return collides;
+}
+
+void MeetGridsBelow(EResource& res, const Field& field) {
+    assert(res.v.y > 0.0f);
+    float anchor_y = res.r.y + res.height;
+    int s_row = static_cast<int>(std::floor(anchor_y / kGridUnit));
+    int e_row = static_cast<int>(std::floor((anchor_y + res.v.y) / kGridUnit));
+    int s_col, e_col;
+    float k1, k2;
+    bool collides;
+    for (int i = s_row; i <= e_row; ++i) {
+        k1 = std::clamp(kGridUnit*(i + 1) - anchor_y, 0.0f, res.v.y);
+        k2 = std::clamp(kGridUnit*i - anchor_y, 0.0f, res.v.y);
+        if (res.v.x < 0.0f) {
+            s_col = static_cast<int>(
+                std::floor((res.r.x + k1/res.v.y*res.v.x) / kGridUnit));
+            e_col = static_cast<int>(
+                std::floor(
+                    (res.r.x + k2/res.v.y*res.v.x + res.width)
+                    / kGridUnit));
+        } else {
+            s_col = static_cast<int>(
+                std::floor((res.r.x + k2/res.v.y*res.v.x) / kGridUnit));
+            e_col = static_cast<int>(
+                std::floor(
+                    (res.r.x + k1/res.v.y*res.v.x + res.width)
+                    / kGridUnit));
+        }
+        for (int j = s_col; j <= e_col; ++j) {
+            collides = CollideWithGridsBelow(res, field, i, j);
+            if (res.v.y <= 0.0f) {
+                break;
+            }
+        }
+        if (collides) {
+            break;
+        }
+    }
+}
+
+}  // namespace
+
 void BMeetField::MeetField(EResource& self, const Field& field) const {
     // TODO: Implement this!
-    // just for debugging
-    int row = static_cast<int>(std::floor(self.r.y / 16));
-    int col = static_cast<int>(std::floor(self.r.x / 16));
-    std::cout << row << ", " << col << ", "
-              << static_cast<int>(field.GetTileCollisionId(row, col)) << ", "
-              << field.GetCollision(row, col).debug_value
-              << std::endl;
+    if (self.v.y < 0.0f) {
+        // ...
+    } else if (self.v.y > 0.0f) {
+        MeetGridsBelow(self, field);
+    }
 }
 
 void BAddVToR::UpdateR(EResource& self) const {
