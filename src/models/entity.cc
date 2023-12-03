@@ -43,6 +43,7 @@ namespace {
 
 bool CollideWithGridsBelow(
         EResource& res, const Field& field, int row, int col) {
+    /*
     bool collides = false;
     switch (field.GetCollision(row, col).coll_id) {
     case TileCollisionId::kNone:
@@ -59,9 +60,11 @@ bool CollideWithGridsBelow(
         break;
     }
     return collides;
+    */
 }
 
 void MeetGridsBelow(EResource& res, const Field& field) {
+    /*
     assert(res.v.y > 0.0f);
     float anchor_y = res.r.y + res.height;
     int s_row = static_cast<int>(std::floor(anchor_y / kGridUnit));
@@ -97,6 +100,7 @@ void MeetGridsBelow(EResource& res, const Field& field) {
             break;
         }
     }
+    */
 }
 
 }  // namespace
