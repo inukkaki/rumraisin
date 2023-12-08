@@ -152,6 +152,7 @@ void RenderEntityCollisionInfo(
 void RenderFieldDebugInfo(
         SDL_Renderer* const renderer, const Field& field, int window_scale) {
     // just for debugging
+    /*
     int value;
     Uint8 r, g, b;
     for (int i = 0; i < kFieldMaxHeight; ++i) {
@@ -180,4 +181,5 @@ void RenderFieldDebugInfo(
             RenderFieldGrid(renderer, i, j, r, g, b, 0xFF, window_scale);
         }
     }
+    */
 }
