@@ -152,22 +152,20 @@ void RenderEntityCollisionInfo(
 void RenderFieldDebugInfo(
         SDL_Renderer* const renderer, const Field& field, int window_scale) {
     // just for debugging
-    /*
-    int value;
+    TileId tile_id;
     Uint8 r, g, b;
     for (int i = 0; i < kFieldMaxHeight; ++i) {
         for (int j = 0; j < kFieldMaxWidth; ++j) {
-            value = field.GetCollision(i, j).debug_value;
-            if (value == 100) {
+            tile_id = field.GetCollision(i, j).id;
+            switch (tile_id) {
+            case TileId::kAir:
                 continue;
-            }
-            switch (value) {
-            case 101:
+            case TileId::kUnknown:
                 r = 0xFF;
                 g = 0x00;
                 b = 0x00;
                 break;
-            case 102:
+            case TileId::kBlock:
                 r = 0xFF;
                 g = 0xFF;
                 b = 0xFF;
@@ -181,5 +179,4 @@ void RenderFieldDebugInfo(
             RenderFieldGrid(renderer, i, j, r, g, b, 0xFF, window_scale);
         }
     }
-    */
 }
