@@ -1,17 +1,18 @@
 #ifndef RUMRAISIN_MODELS_TILE_H_
 #define RUMRAISIN_MODELS_TILE_H_
 
-inline constexpr int kNumberOfTileIds = 3;
-
-inline constexpr int kUnknownTileId = 1;
-
-enum class TileCollisionId : unsigned char {
-    kNone,
-    kSolid,
+enum class TileId : unsigned char {
+    kAir,
+    kUnknown,
+    kBlock,
+    kMax
 };
 
 struct Tile {
-    TileCollisionId coll_id;
+    bool is_close_t;  // On the top-side
+    bool is_close_l;  // On the left side
+    bool is_close_r;  // On the right side
+    bool is_close_d;  // On the down-side
 
     // just for debugging
     int debug_value;
@@ -19,6 +20,6 @@ struct Tile {
 
 void SetTileDict();
 
-const Tile& GetTile(unsigned int tile_id);
+const Tile& GetTile(TileId tile_id);
 
 #endif  // RUMRAISIN_MODELS_TILE_H_

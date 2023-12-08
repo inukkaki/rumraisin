@@ -19,7 +19,7 @@ public:
 
 private:
     std::array<
-        std::array<unsigned int, kFieldMaxWidth>,
+        std::array<TileId, kFieldMaxWidth>,
         kFieldMaxHeight> collision_;
 };
 

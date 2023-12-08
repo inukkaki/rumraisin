@@ -62,9 +62,15 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
         kBAddAToV, kBMeetField, kBAddVToR);
     Vector2D test_g(0.0f, 0.1f);
     //
-    for (unsigned int tile_id = 0; tile_id < 4; ++tile_id) {
-        std::cout << tile_id << ", " << GetTile(tile_id).debug_value << ", "
-                  << static_cast<int>(GetTile(tile_id).coll_id)
+    TileId tile_id;
+    for (int index = 0; index < static_cast<int>(TileId::kMax); ++index) {
+        tile_id = static_cast<TileId>(index);
+        std::cout << "ID: " << index << ", "
+                  << GetTile(tile_id).debug_value << ", "
+                  << GetTile(tile_id).is_close_t << ", "
+                  << GetTile(tile_id).is_close_l << ", "
+                  << GetTile(tile_id).is_close_r << ", "
+                  << GetTile(tile_id).is_close_d << ", "
                   << std::endl;
     }
     Field test_field;
