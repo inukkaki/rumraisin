@@ -12,6 +12,7 @@ std::array<Tile, static_cast<int>(TileId::kMax)> tile_dict;
 void SetTileDict() {
     // just for debugging
     int index = static_cast<int>(TileId::kAir);
+    tile_dict[index].id = TileId::kAir;
     tile_dict[index].is_close_t = false;
     tile_dict[index].is_close_l = false;
     tile_dict[index].is_close_r = false;
@@ -19,6 +20,7 @@ void SetTileDict() {
     tile_dict[index].debug_value = 100;
 
     index = static_cast<int>(TileId::kUnknown);
+    tile_dict[index].id = TileId::kUnknown;
     tile_dict[index].is_close_t = false;
     tile_dict[index].is_close_l = false;
     tile_dict[index].is_close_r = false;
@@ -26,6 +28,7 @@ void SetTileDict() {
     tile_dict[index].debug_value = 101;
 
     index = static_cast<int>(TileId::kBlock);
+    tile_dict[index].id = TileId::kBlock;
     tile_dict[index].is_close_t = true;
     tile_dict[index].is_close_l = true;
     tile_dict[index].is_close_r = true;

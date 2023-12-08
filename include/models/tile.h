@@ -9,6 +9,8 @@ enum class TileId : unsigned char {
 };
 
 struct Tile {
+    TileId id;
+
     bool is_close_t;  // On the top-side
     bool is_close_l;  // On the left side
     bool is_close_r;  // On the right side
