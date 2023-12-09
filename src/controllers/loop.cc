@@ -95,7 +95,6 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
         test_entity.GetAirDrag();
         test_entity.UpdateA();
         test_entity.UpdateV();
-        test_entity.MeetField(test_field);
         test_entity.DetectCollision(test_field);
         test_entity.UpdateR();
         //RenderEntityDebugInfo(renderer, test_entity.res(), window_scale);

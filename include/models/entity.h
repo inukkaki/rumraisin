@@ -209,7 +209,6 @@ public:
     void GetAirDrag();
     void UpdateA();
     void UpdateV();
-    void MeetField(const Field& field);  // Remove this in the future
     void DetectCollision(const Field& field);
     void UpdateR();
 

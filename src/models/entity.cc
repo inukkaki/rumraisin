@@ -154,10 +154,6 @@ void Entity::UpdateV() {
     update_v_->UpdateV(res_);
 }
 
-void Entity::MeetField(const Field& field) {
-    meet_field_->MeetField(res_, field);
-}
-
 void Entity::DetectCollision(const Field& field) {
     detect_collision_->DetectCollision(res_, *meet_field_, field);
 }
