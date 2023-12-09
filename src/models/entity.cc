@@ -145,6 +145,8 @@ void DetectCollisionDownward(EResource& res) {
         }
         for (int j = s_col; j <= e_col; ++j) {
             // ...
+            // just for debugging
+            IncrementFieldReferenceCount(i, j);
         }
         // ...
     }

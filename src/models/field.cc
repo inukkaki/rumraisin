@@ -20,8 +20,6 @@ void InitFieldReferenceCount() {
     }
 }
 
-namespace {
-
 void IncrementFieldReferenceCount(int row, int col) {
     bool cond_row = (0 <= row) && (row < kFieldMaxHeight);
     bool cond_col = (0 <= col) && (col < kFieldMaxWidth);
@@ -30,7 +28,22 @@ void IncrementFieldReferenceCount(int row, int col) {
     }
 }
 
-}  // namespace
+int GetFieldReferenceCount(int row, int col) {
+    bool cond_row = (0 <= row) && (row < kFieldMaxHeight);
+    bool cond_col = (0 <= col) && (col < kFieldMaxWidth);
+    if (cond_row && cond_col) {
+        return field_reference_count[row][col];
+    }
+    return 0;
+}
+
+void ResetFieldReferenceCount(int row, int col) {
+    bool cond_row = (0 <= row) && (row < kFieldMaxHeight);
+    bool cond_col = (0 <= col) && (col < kFieldMaxWidth);
+    if (cond_row && cond_col) {
+        field_reference_count[row][col] = 0;
+    }
+}
 
 void Field::Load() {
     // just for debugging
@@ -55,9 +68,6 @@ const Tile& Field::GetCollision(int row, int col) const {
     bool cond_col = (0 <= col) && (col < kFieldMaxWidth);
     if (cond_row && cond_col) {
         tile_id = collision_[row][col];
-
-        // just for debugging
-        IncrementFieldReferenceCount(row, col);
     }
     return GetTile(tile_id);
 }

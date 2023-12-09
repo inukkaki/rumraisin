@@ -10,6 +10,10 @@ inline constexpr int kFieldMaxHeight = 18;
 
 void InitFieldReferenceCount();
 
+void IncrementFieldReferenceCount(int row, int col);
+int GetFieldReferenceCount(int row, int col);
+void ResetFieldReferenceCount(int row, int col);
+
 class Field {
 public:
     Field() {}

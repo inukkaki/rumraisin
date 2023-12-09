@@ -149,6 +149,28 @@ void RenderEntityCollisionInfo(
     RenderEntityAcceleration(renderer, res, window_scale);
 }
 
+namespace {
+
+void RenderGridReferenceCount(
+        SDL_Renderer* const renderer, int row, int col, int window_scale) {
+    int ref_count = GetFieldReferenceCount(row, col);
+    SDL_Rect rect = {
+        window_scale * kGridUnit * col,
+        window_scale * kGridUnit * row,
+        window_scale * kGridUnit,
+        window_scale * kGridUnit
+    };
+    SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0xFF, 0xFF);
+    for (int i = 0; (i < ref_count) && (i < kGridUnit / 2); ++i) {
+        SDL_RenderDrawRect(renderer, &rect);
+        rect.w -= window_scale * 2;
+        rect.h -= window_scale * 2;
+    }
+    ResetFieldReferenceCount(row, col);
+}
+
+}  // namespace
+
 void RenderFieldDebugInfo(
         SDL_Renderer* const renderer, const Field& field, int window_scale) {
     // just for debugging
@@ -159,7 +181,7 @@ void RenderFieldDebugInfo(
             tile_id = field.GetCollision(i, j).id;
             switch (tile_id) {
             case TileId::kAir:
-                continue;
+                break;
             case TileId::kUnknown:
                 r = 0xFF;
                 g = 0x00;
@@ -176,7 +198,10 @@ void RenderFieldDebugInfo(
                 b = 0x80;
                 break;
             }
-            RenderFieldGrid(renderer, i, j, r, g, b, 0xFF, window_scale);
+            if (tile_id != TileId::kAir) {
+                RenderFieldGrid(renderer, i, j, r, g, b, 0xFF, window_scale);
+            }
+            RenderGridReferenceCount(renderer, i, j, window_scale);
         }
     }
 }
