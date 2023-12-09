@@ -119,29 +119,29 @@ void BAddVToR::UpdateR(EResource& self) const {
 }
 
 void Entity::Control(const KeyboardHandler& kbd_handler) {
-    control_.Control(res_, kbd_handler);
+    control_->Control(res_, kbd_handler);
 }
 
 void Entity::GetGravity(const Vector2D& g) {
-    get_gravity_.GetGravity(res_, g);
+    get_gravity_->GetGravity(res_, g);
 }
 
 void Entity::GetAirDrag() {
-    get_air_drag_.GetAirDrag(res_);
+    get_air_drag_->GetAirDrag(res_);
 }
 
 void Entity::UpdateA() {
-    update_a_.UpdateA(res_);
+    update_a_->UpdateA(res_);
 }
 
 void Entity::UpdateV() {
-    update_v_.UpdateV(res_);
+    update_v_->UpdateV(res_);
 }
 
 void Entity::MeetField(const Field& field) {
-    meet_field_.MeetField(res_, field);
+    meet_field_->MeetField(res_, field);
 }
 
 void Entity::UpdateR() {
-    update_r_.UpdateR(res_);
+    update_r_->UpdateR(res_);
 }

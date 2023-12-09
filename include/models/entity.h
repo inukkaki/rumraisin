@@ -165,13 +165,13 @@ public:
            const BMeetFieldBehavior& meet_field,
            const BUpdateRBehavior& update_r)
         : res_(res),
-          control_(control),
-          get_gravity_(get_gravity),
-          get_air_drag_(get_air_drag),
-          update_a_(update_a),
-          update_v_(update_v),
-          meet_field_(meet_field),
-          update_r_(update_r) {}
+          control_(&control),
+          get_gravity_(&get_gravity),
+          get_air_drag_(&get_air_drag),
+          update_a_(&update_a),
+          update_v_(&update_v),
+          meet_field_(&meet_field),
+          update_r_(&update_r) {}
     ~Entity() {}
 
     const EResource& res() { return res_; }
@@ -187,13 +187,13 @@ public:
 private:
     EResource res_;
 
-    const BControlBehavior& control_;
-    const BGetGravityBehavior& get_gravity_;
-    const BGetAirDragBehavior& get_air_drag_;
-    const BUpdateABehavior& update_a_;
-    const BUpdateVBehavior& update_v_;
-    const BMeetFieldBehavior& meet_field_;
-    const BUpdateRBehavior& update_r_;
+    const BControlBehavior* control_;
+    const BGetGravityBehavior* get_gravity_;
+    const BGetAirDragBehavior* get_air_drag_;
+    const BUpdateABehavior* update_a_;
+    const BUpdateVBehavior* update_v_;
+    const BMeetFieldBehavior* meet_field_;
+    const BUpdateRBehavior* update_r_;
 };
 
 #endif  // RUMRAISIN_MODELS_ENTITY_H_
