@@ -1,9 +1,5 @@
 #include "interfaces/graphics.h"
 
-#include <algorithm>
-#include <cassert>
-#include <cmath>
-
 #include "SDL2/SDL.h"
 
 #include "interfaces/config.h"
@@ -83,6 +79,17 @@ void RenderEntityVelocityOnCorners(
     }
 }
 
+}  // namespace
+
+void RenderEntityCollisionInfo(
+        SDL_Renderer* const renderer, const EResource& res, int window_scale) {
+    RenderEntityBoundingBox(renderer, res, window_scale);
+    RenderEntityVelocityOnCorners(renderer, res, window_scale);
+    RenderEntityAcceleration(renderer, res, window_scale);
+}
+
+namespace {
+
 void RenderFieldGrid(
         SDL_Renderer* const renderer, int row, int col, Uint8 r, Uint8 g,
         Uint8 b, Uint8 a, int window_scale) {
@@ -95,61 +102,6 @@ void RenderFieldGrid(
     SDL_SetRenderDrawColor(renderer, r, g, b, a);
     SDL_RenderDrawRect(renderer, &rect);
 }
-
-void RenderDetectedGridsBelow(
-        SDL_Renderer* const renderer, const EResource& res, int window_scale) {
-    assert(res.v.y > 0.0f);
-    float anchor_y = res.r.y + res.height;
-    int s_row = static_cast<int>(std::floor(anchor_y / kGridUnit));
-    int e_row = static_cast<int>(std::floor((anchor_y + res.v.y) / kGridUnit));
-    int s_col, e_col;
-    float k1, k2;
-    for (int i = s_row; i <= e_row; ++i) {
-        k1 = std::clamp(kGridUnit*(i + 1) - anchor_y, 0.0f, res.v.y);
-        k2 = std::clamp(kGridUnit*i - anchor_y, 0.0f, res.v.y);
-        if (res.v.x < 0.0f) {
-            s_col = static_cast<int>(
-                std::floor((res.r.x + k1/res.v.y*res.v.x) / kGridUnit));
-            e_col = static_cast<int>(
-                std::floor(
-                    (res.r.x + k2/res.v.y*res.v.x + res.width)
-                    / kGridUnit));
-        } else {
-            s_col = static_cast<int>(
-                std::floor((res.r.x + k2/res.v.y*res.v.x) / kGridUnit));
-            e_col = static_cast<int>(
-                std::floor(
-                    (res.r.x + k1/res.v.y*res.v.x + res.width)
-                    / kGridUnit));
-        }
-        for (int j = s_col; j <= e_col; ++j) {
-            RenderFieldGrid(
-                renderer, i, j, 0x00, 0xFF, 0xFF, 0x80, window_scale);
-        }
-    }
-}
-
-void RenderDetectedGrids(
-        SDL_Renderer* const renderer, const EResource& res, int window_scale) {
-    // TODO: Implement this!
-    if (res.v.y < 0.0f) {
-        // ...
-    } else if (res.v.y > 0.0f) {
-        RenderDetectedGridsBelow(renderer, res, window_scale);
-    }
-}
-
-}  // namespace
-
-void RenderEntityCollisionInfo(
-        SDL_Renderer* const renderer, const EResource& res, int window_scale) {
-    RenderDetectedGrids(renderer, res, window_scale);
-    RenderEntityBoundingBox(renderer, res, window_scale);
-    RenderEntityVelocityOnCorners(renderer, res, window_scale);
-    RenderEntityAcceleration(renderer, res, window_scale);
-}
-
-namespace {
 
 void RenderGridReferenceCount(
         SDL_Renderer* const renderer, int row, int col, int window_scale) {
