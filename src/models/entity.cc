@@ -114,6 +114,22 @@ void BMeetField::MeetField(EResource& self, const Field& field) const {
     }
 }
 
+void BDetectCollision::DetectCollision(
+        EResource& self, const BMeetFieldBehavior& meet_field,
+        const Field& field) const {
+    // TODO: Implement this!
+    if (self.v.y < 0.0f) {
+        //
+    } else if (self.v.y > 0.0f) {
+        //
+    }
+    if (self.v.x < 0.0f) {
+        //
+    } else if (self.v.x > 0.0f) {
+        //
+    }
+}
+
 void BAddVToR::UpdateR(EResource& self) const {
     self.r += self.v;
 }
@@ -140,6 +156,10 @@ void Entity::UpdateV() {
 
 void Entity::MeetField(const Field& field) {
     meet_field_->MeetField(res_, field);
+}
+
+void Entity::DetectCollision(const Field& field) {
+    detect_collision_->DetectCollision(res_, *meet_field_, field);
 }
 
 void Entity::UpdateR() {

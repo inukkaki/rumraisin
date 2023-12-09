@@ -59,7 +59,7 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
     res.air_drag_coefficient = 0.2f;
     Entity test_entity(
         res, kBControlPlayer, kBGetGravity, kBGetLinearAirDrag, kBAddForceToA,
-        kBAddAToV, kBMeetField, kBAddVToR);
+        kBAddAToV, kBMeetField, kBNotDetectCollision, kBAddVToR);
     Vector2D test_g(0.0f, 0.1f);
     //
     TileId tile_id;
@@ -96,6 +96,7 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
         test_entity.UpdateA();
         test_entity.UpdateV();
         test_entity.MeetField(test_field);
+        test_entity.DetectCollision(test_field);
         test_entity.UpdateR();
         //RenderEntityDebugInfo(renderer, test_entity.res(), window_scale);
         RenderEntityCollisionInfo(renderer, test_entity.res(), window_scale);

@@ -136,6 +136,32 @@ public:
 inline constexpr BNotMeetField kBNotMeetField;
 inline constexpr BMeetField kBMeetField;
 
+class BDetectCollisionBehavior {
+public:
+    virtual void DetectCollision(
+            EResource& self, const BMeetFieldBehavior& meet_field,
+            const Field& field) const = 0;
+};
+
+class BNotDetectCollision : public BDetectCollisionBehavior {
+public:
+    void DetectCollision(
+            EResource& self, const BMeetFieldBehavior& meet_field,
+            const Field& field) const override {
+        /* NO-OP */
+    }
+};
+
+class BDetectCollision : public BDetectCollisionBehavior {
+public:
+    void DetectCollision(
+            EResource& self, const BMeetFieldBehavior& meet_field,
+            const Field& field) const override;
+};
+
+inline constexpr BNotDetectCollision kBNotDetectCollision;
+inline constexpr BDetectCollision kBDetectCollision;
+
 class BUpdateRBehavior {
 public:
     virtual void UpdateR(EResource& self) const = 0;
@@ -163,6 +189,7 @@ public:
            const BUpdateABehavior& update_a,
            const BUpdateVBehavior& update_v,
            const BMeetFieldBehavior& meet_field,
+           const BDetectCollisionBehavior& detect_collision,
            const BUpdateRBehavior& update_r)
         : res_(res),
           control_(&control),
@@ -171,6 +198,7 @@ public:
           update_a_(&update_a),
           update_v_(&update_v),
           meet_field_(&meet_field),
+          detect_collision_(&detect_collision),
           update_r_(&update_r) {}
     ~Entity() {}
 
@@ -181,7 +209,8 @@ public:
     void GetAirDrag();
     void UpdateA();
     void UpdateV();
-    void MeetField(const Field& field);
+    void MeetField(const Field& field);  // Remove this in the future
+    void DetectCollision(const Field& field);
     void UpdateR();
 
 private:
@@ -193,6 +222,7 @@ private:
     const BUpdateABehavior* update_a_;
     const BUpdateVBehavior* update_v_;
     const BMeetFieldBehavior* meet_field_;
+    const BDetectCollisionBehavior* detect_collision_;
     const BUpdateRBehavior* update_r_;
 };
 
