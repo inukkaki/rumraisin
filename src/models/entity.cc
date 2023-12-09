@@ -127,6 +127,43 @@ void DetectCollisionDownward(
     }
 }
 
+void DetectCollisionRightward(
+        EResource& res, const BMeetFieldBehavior& meet_field,
+        const Field& field) {
+    assert(res.v.x > 0.0f);
+    float anchor_x = res.r.x + res.width;
+    int s_col = static_cast<int>(std::floor(anchor_x / kGridUnit));
+    int e_col = static_cast<int>(std::floor((anchor_x + res.v.x) / kGridUnit));
+    float k1, k2;
+    int s_row, e_row;
+    // ...
+    for (int j = s_col; j <= e_col; ++j) {
+        k1 = std::clamp(kGridUnit*(j + 1) - anchor_x, 0.0f, res.v.x) / res.v.x;
+        k2 = std::clamp(kGridUnit*j - anchor_x, 0.0f, res.v.x) / res.v.x;
+        if (res.v.y < 0.0f) {
+            s_row = static_cast<int>(
+                std::floor((res.r.y + k1*res.v.y) / kGridUnit)
+            );
+            e_row = static_cast<int>(
+                std::floor((res.r.y + k2*res.v.y + res.height) / kGridUnit)
+            );
+        } else {
+            s_row = static_cast<int>(
+                std::floor((res.r.y + k2*res.v.y) / kGridUnit)
+            );
+            e_row = static_cast<int>(
+                std::floor((res.r.y + k1*res.v.y + res.height) / kGridUnit)
+            );
+        }
+        for (int i = s_row; i <= e_row; ++i) {
+            // ...
+            // just for debugging
+            IncrementFieldReferenceCount(i, j);
+        }
+        // ...
+    }
+}
+
 }  // namespace
 
 void BDetectCollision::DetectCollision(
@@ -141,7 +178,7 @@ void BDetectCollision::DetectCollision(
     if (self.v.x < 0.0f) {
         //
     } else if (self.v.x > 0.0f) {
-        //
+        DetectCollisionRightward(self, meet_field, field);
     }
 }
 
