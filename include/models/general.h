@@ -1,6 +1,13 @@
 #ifndef RUMRAISIN_MODELS_GENERAL_H_
 #define RUMRAISIN_MODELS_GENERAL_H_
 
+enum class Direction : unsigned char {
+    kUp,
+    kLeft,
+    kRight,
+    kDown
+};
+
 struct Vector2D {
     float x;
     float y;
