@@ -42,6 +42,17 @@ void BAddAToV::UpdateV(EResource& self) const {
 
 namespace {
 
+bool CollideRightward(EResource& res, float border_x) {
+    assert(res.v.x > 0.0f);
+    bool collides = false;
+    float anchor_x = res.r.x + res.width;
+    if ((anchor_x <= border_x) && (border_x <= anchor_x + res.v.x)) {
+        collides = true;
+        res.v.x = border_x - anchor_x;
+    }
+    return collides;
+}
+
 bool CollideDownward(EResource& res, float border_y) {
     assert(res.v.y > 0.0f);
     bool collides = false;
@@ -69,7 +80,9 @@ bool BMeetField::MeetField(
         // ...
         break;
     case Direction::kRight:
-        // ...
+        if (tile.is_close_l) {
+            collides = CollideRightward(self, kGridUnit * col);
+        }
         break;
     case Direction::kDown:
         if (tile.is_close_t) {
@@ -95,7 +108,7 @@ void DetectCollisionDownward(
     int e_row = static_cast<int>(std::floor((anchor_y + res.v.y) / kGridUnit));
     float k1, k2;
     int s_col, e_col;
-    bool collides;
+    bool collides = false;
     for (int i = s_row; i <= e_row; ++i) {
         k1 = std::clamp(kGridUnit*(i + 1) - anchor_y, 0.0f, res.v.y) / res.v.y;
         k2 = std::clamp(kGridUnit*i - anchor_y, 0.0f, res.v.y) / res.v.y;
@@ -136,7 +149,7 @@ void DetectCollisionRightward(
     int e_col = static_cast<int>(std::floor((anchor_x + res.v.x) / kGridUnit));
     float k1, k2;
     int s_row, e_row;
-    // ...
+    bool collides = false;
     for (int j = s_col; j <= e_col; ++j) {
         k1 = std::clamp(kGridUnit*(j + 1) - anchor_x, 0.0f, res.v.x) / res.v.x;
         k2 = std::clamp(kGridUnit*j - anchor_x, 0.0f, res.v.x) / res.v.x;
@@ -156,11 +169,15 @@ void DetectCollisionRightward(
             );
         }
         for (int i = s_row; i <= e_row; ++i) {
-            // ...
-            // just for debugging
-            IncrementFieldReferenceCount(i, j);
+            collides = meet_field.MeetField(
+                res, field, Direction::kRight, i, j);
+            if (collides) {
+                break;
+            }
         }
-        // ...
+        if (collides) {
+            break;
+        }
     }
 }
 
