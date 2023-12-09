@@ -60,6 +60,8 @@ bool CollideDownward(EResource& res, float border_y) {
     if ((anchor_y <= border_y) && (border_y <= anchor_y + res.v.y)) {
         collides = true;
         res.v.y = border_y - anchor_y;
+        res.is_aligned_d = true;
+        res.aligned_y = border_y - res.height;
     }
     return collides;
 }
@@ -201,6 +203,14 @@ void BDetectCollision::DetectCollision(
 
 void BAddVToR::UpdateR(EResource& self) const {
     self.r += self.v;
+}
+
+void BAddVToRWithAligning::UpdateR(EResource& self) const {
+    self.r += self.v;
+    if (self.is_aligned_d) {
+        self.r.y = self.aligned_y;
+        self.is_aligned_d = false;
+    }
 }
 
 void Entity::Control(const KeyboardHandler& kbd_handler) {

@@ -17,6 +17,10 @@ struct EResource {
     Vector2D external_force;  // kg px frame-2
 
     float air_drag_coefficient;
+
+    bool is_aligned_d;  // On the down-side
+
+    float aligned_y;
 };
 
 class BControlBehavior {
@@ -183,8 +187,14 @@ public:
     void UpdateR(EResource& self) const override;
 };
 
+class BAddVToRWithAligning : public BUpdateRBehavior {
+public:
+    void UpdateR(EResource& self) const override;
+};
+
 inline constexpr BNotUpdateR kBNotUpdateR;
 inline constexpr BAddVToR kBAddVToR;
+inline constexpr BAddVToRWithAligning kBAddVToRWithAligning;
 
 class Entity {
 public:

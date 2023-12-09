@@ -56,7 +56,7 @@ void Field::Load() {
     collision_[0][kFieldMaxWidth - 1] = TileId::kUnknown;
     collision_[kFieldMaxHeight - 1][kFieldMaxWidth - 1] = TileId::kUnknown;
     for (int i = kFieldMaxHeight - 5; i < kFieldMaxHeight - 2; ++i) {
-        for (int j = 0; j < kFieldMaxWidth - 2; ++j) {
+        for (int j = 4; j < kFieldMaxWidth - 2; ++j) {
             collision_[i][j] = TileId::kBlock;
         }
     }

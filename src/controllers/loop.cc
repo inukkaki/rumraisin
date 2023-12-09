@@ -59,7 +59,7 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
     res.air_drag_coefficient = 0.2f;
     Entity test_entity(
         res, kBControlPlayer, kBGetGravity, kBGetLinearAirDrag, kBAddForceToA,
-        kBAddAToV, kBMeetField, kBDetectCollision, kBAddVToR);
+        kBAddAToV, kBMeetField, kBDetectCollision, kBAddVToRWithAligning);
     Vector2D test_g(0.0f, 0.1f);
     //
     TileId tile_id;
