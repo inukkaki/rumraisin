@@ -1,6 +1,36 @@
 #include "models/field.h"
 
+#include <array>
+
 #include "models/tile.h"
+
+namespace {
+
+std::array<
+    std::array<int, kFieldMaxWidth>,
+    kFieldMaxHeight> field_reference_count;
+
+}  // namespace
+
+void InitFieldReferenceCount() {
+    for (int i = 0; i < kFieldMaxHeight; ++i) {
+        for (int j = 0; j < kFieldMaxWidth; ++j) {
+            field_reference_count[i][j] = 0;
+        }
+    }
+}
+
+namespace {
+
+void IncrementFieldReferenceCount(int row, int col) {
+    bool cond_row = (0 <= row) && (row < kFieldMaxHeight);
+    bool cond_col = (0 <= col) && (col < kFieldMaxWidth);
+    if (cond_row && cond_col) {
+        ++field_reference_count[row][col];
+    }
+}
+
+}  // namespace
 
 void Field::Load() {
     // just for debugging
@@ -25,6 +55,9 @@ const Tile& Field::GetCollision(int row, int col) const {
     bool cond_col = (0 <= col) && (col < kFieldMaxWidth);
     if (cond_row && cond_col) {
         tile_id = collision_[row][col];
+
+        // just for debugging
+        IncrementFieldReferenceCount(row, col);
     }
     return GetTile(tile_id);
 }

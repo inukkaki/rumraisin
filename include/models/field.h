@@ -8,6 +8,8 @@
 inline constexpr int kFieldMaxWidth = 22;
 inline constexpr int kFieldMaxHeight = 18;
 
+void InitFieldReferenceCount();
+
 class Field {
 public:
     Field() {}

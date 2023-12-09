@@ -75,6 +75,7 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
     }
     Field test_field;
     test_field.Load();
+    InitFieldReferenceCount();
 
     // LOOP
     fr_balancer.SetTimer();
