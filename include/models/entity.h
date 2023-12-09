@@ -118,19 +118,25 @@ inline constexpr BAddAToV kBAddAToV;
 
 class BMeetFieldBehavior {
 public:
-    virtual void MeetField(EResource& self, const Field& field) const = 0;
+    virtual bool MeetField(
+            EResource& self, const Field& field, Direction direction,
+            int row, int col) const = 0;
 };
 
 class BNotMeetField : public BMeetFieldBehavior {
 public:
-    void MeetField(EResource& self, const Field& field) const override {
-        /* NO-OP */
+    bool MeetField(
+            EResource& self, const Field& field, Direction direction,
+            int row, int col) const override {
+        return false;
     }
 };
 
 class BMeetField : public BMeetFieldBehavior {
 public:
-    void MeetField(EResource& self, const Field& field) const override;
+    bool MeetField(
+            EResource& self, const Field& field, Direction direction,
+            int row, int col) const override;
 };
 
 inline constexpr BNotMeetField kBNotMeetField;

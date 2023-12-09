@@ -7,6 +7,7 @@
 #include "interfaces/config.h"
 #include "interfaces/keyboard.h"
 #include "models/field.h"
+#include "models/general.h"
 
 void BControlPlayer::Control(
         EResource& self, const KeyboardHandler& kbd_handler) const {
@@ -103,28 +104,60 @@ void MeetGridsBelow(EResource& res, const Field& field) {
     */
 }
 
+bool CollideDownward(EResource& res, float border_y) {
+    assert(res.v.y > 0.0f);
+    bool collides = false;
+    float anchor_y = res.r.y + res.height;
+    if ((anchor_y <= border_y) && (border_y <= anchor_y + res.v.y)) {
+        collides = true;
+        res.v.y = border_y - anchor_y;
+    }
+    return collides;
+}
+
 }  // namespace
 
-void BMeetField::MeetField(EResource& self, const Field& field) const {
+bool BMeetField::MeetField(
+        EResource& self, const Field& field, Direction direction,
+        int row, int col) const {
     // TODO: Implement this!
-    if (self.v.y < 0.0f) {
+    bool collides = false;
+    const Tile& tile = field.GetCollision(row, col);
+    switch (direction) {
+    case Direction::kUp:
         // ...
-    } else if (self.v.y > 0.0f) {
-        MeetGridsBelow(self, field);
+        break;
+    case Direction::kLeft:
+        // ...
+        break;
+    case Direction::kRight:
+        // ...
+        break;
+    case Direction::kDown:
+        if (tile.is_close_t) {
+            collides = CollideDownward(self, kGridUnit * row);
+        }
+        break;
+    default:
+        break;
     }
+    // just for debugging
+    IncrementFieldReferenceCount(row, col);
+    return collides;
 }
 
 namespace {
 
-void DetectCollisionDownward(EResource& res) {
-    // TODO: Implement this!
+void DetectCollisionDownward(
+        EResource& res, const BMeetFieldBehavior& meet_field,
+        const Field& field) {
     assert(res.v.y > 0.0f);
     float anchor_y = res.r.y + res.height;
     int s_row = static_cast<int>(std::floor(anchor_y / kGridUnit));
     int e_row = static_cast<int>(std::floor((anchor_y + res.v.y) / kGridUnit));
     float k1, k2;
     int s_col, e_col;
-    // ...
+    bool collides;
     for (int i = s_row; i <= e_row; ++i) {
         k1 = std::clamp(kGridUnit*(i + 1) - anchor_y, 0.0f, res.v.y) / res.v.y;
         k2 = std::clamp(kGridUnit*i - anchor_y, 0.0f, res.v.y) / res.v.y;
@@ -144,11 +177,15 @@ void DetectCollisionDownward(EResource& res) {
             );
         }
         for (int j = s_col; j <= e_col; ++j) {
-            // ...
-            // just for debugging
-            IncrementFieldReferenceCount(i, j);
+            collides = meet_field.MeetField(
+                res, field, Direction::kDown, i, j);
+            if (collides) {
+                break;
+            }
         }
-        // ...
+        if (collides) {
+            break;
+        }
     }
 }
 
@@ -161,7 +198,7 @@ void BDetectCollision::DetectCollision(
     if (self.v.y < 0.0f) {
         //
     } else if (self.v.y > 0.0f) {
-        DetectCollisionDownward(self);
+        DetectCollisionDownward(self, meet_field, field);
     }
     if (self.v.x < 0.0f) {
         //
