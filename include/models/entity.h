@@ -18,8 +18,10 @@ struct EResource {
 
     float air_drag_coefficient;
 
+    bool is_aligned_r;  // On the right side
     bool is_aligned_d;  // On the down-side
 
+    float aligned_x;
     float aligned_y;
 };
 

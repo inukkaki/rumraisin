@@ -49,6 +49,8 @@ bool CollideRightward(EResource& res, float border_x) {
     if ((anchor_x <= border_x) && (border_x <= anchor_x + res.v.x)) {
         collides = true;
         res.v.x = border_x - anchor_x;
+        res.is_aligned_r = true;
+        res.aligned_x = border_x - res.width;
     }
     return collides;
 }
@@ -207,6 +209,10 @@ void BAddVToR::UpdateR(EResource& self) const {
 
 void BAddVToRWithAligning::UpdateR(EResource& self) const {
     self.r += self.v;
+    if (self.is_aligned_r) {
+        self.r.x = self.aligned_x;
+        self.is_aligned_r = false;
+    }
     if (self.is_aligned_d) {
         self.r.y = self.aligned_y;
         self.is_aligned_d = false;
