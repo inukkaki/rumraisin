@@ -257,6 +257,9 @@ void BDetectCollision::DetectCollision(
         EResource& self, const BMeetFieldBehavior& meet_field,
         const Field& field) const {
     // TODO: Implement this!
+    self.is_aligned_l = false;
+    self.is_aligned_r = false;
+    self.is_aligned_d = false;
     if (self.v.y < 0.0f) {
         //
     } else if (self.v.y > 0.0f) {
