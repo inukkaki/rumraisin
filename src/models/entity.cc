@@ -49,6 +49,20 @@ namespace {
 
 constexpr float kCollisionErrorMargin = 2.0f;
 
+bool CollideLeftward(EResource& res, float border_x) {
+    assert(res.v.x < 0.0f);
+    bool collides = false;
+    float anchor_x = res.r.x - 1.0f;
+    if ((anchor_x + res.v.x <= border_x)
+            && (border_x <= anchor_x + kCollisionErrorMargin)) {
+        collides = true;
+        res.v.x = 0.0f;
+        res.is_aligned_l = true;
+        res.aligned_x = border_x + 1.0f;
+    }
+    return collides;
+}
+
 bool CollideRightward(EResource& res, float border_x) {
     assert(res.v.x > 0.0f);
     bool collides = false;
@@ -90,7 +104,9 @@ bool BMeetField::MeetField(
         // ...
         break;
     case Direction::kLeft:
-        // ...
+        if (tile.is_close_r) {
+            collides = CollideLeftward(self, kGridUnit*(col + 1) - 1);
+        }
         break;
     case Direction::kRight:
         if (tile.is_close_l) {
@@ -259,6 +275,10 @@ void BAddVToR::UpdateR(EResource& self) const {
 
 void BAddVToRWithAligning::UpdateR(EResource& self) const {
     self.r += self.v;
+    if (self.is_aligned_l) {
+        self.r.x = self.aligned_x;
+        self.is_aligned_l = false;
+    }
     if (self.is_aligned_r) {
         self.r.x = self.aligned_x;
         self.is_aligned_r = false;
