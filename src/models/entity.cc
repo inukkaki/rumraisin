@@ -136,6 +136,8 @@ int CalcBoundingPos(
     );
 }
 
+constexpr float kCollisionLeftSideTolerance = 0.5f;
+
 void DetectCollisionDownward(
         EResource& res, const BMeetFieldBehavior& meet_field,
         const Field& field) {
@@ -150,10 +152,12 @@ void DetectCollisionDownward(
         k1 = std::clamp(kGridUnit*(i + 1) - anchor_y, 0.0f, res.v.y) / res.v.y;
         k2 = std::clamp(kGridUnit*i - anchor_y, 0.0f, res.v.y) / res.v.y;
         if (res.v.x < 0.0f) {
-            s_col = CalcBoundingPos(res.r.x, k1, res.v.x, 0.0f, 0.0f);
+            s_col = CalcBoundingPos(
+                res.r.x, k1, res.v.x, 0.0f, kCollisionLeftSideTolerance);
             e_col = CalcBoundingPos(res.r.x, k2, res.v.x, res.width, -1.0f);
         } else {
-            s_col = CalcBoundingPos(res.r.x, k2, res.v.x, 0.0f, 0.0f);
+            s_col = CalcBoundingPos(
+                res.r.x, k2, res.v.x, 0.0f, kCollisionLeftSideTolerance);
             e_col = CalcBoundingPos(res.r.x, k1, res.v.x, res.width, -1.0f);
         }
         for (int j = s_col; j <= e_col; ++j) {
