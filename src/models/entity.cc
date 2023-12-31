@@ -42,13 +42,16 @@ void BAddAToV::UpdateV(EResource& self) const {
 
 namespace {
 
+constexpr float kCollisionErrorMargin = 2.0f;
+
 bool CollideRightward(EResource& res, float border_x) {
     assert(res.v.x > 0.0f);
     bool collides = false;
     float anchor_x = res.r.x + res.width;
-    if ((anchor_x <= border_x) && (border_x <= anchor_x + res.v.x)) {
+    if ((anchor_x - kCollisionErrorMargin <= border_x)
+            && (border_x <= anchor_x + res.v.x)) {
         collides = true;
-        res.v.x = border_x - anchor_x;
+        res.v.x = 0.0f;
         res.is_aligned_r = true;
         res.aligned_x = border_x - res.width;
     }
@@ -59,9 +62,10 @@ bool CollideDownward(EResource& res, float border_y) {
     assert(res.v.y > 0.0f);
     bool collides = false;
     float anchor_y = res.r.y + res.height;
-    if ((anchor_y <= border_y) && (border_y <= anchor_y + res.v.y)) {
+    if ((anchor_y - kCollisionErrorMargin <= border_y)
+            && (border_y <= anchor_y + res.v.y)) {
         collides = true;
-        res.v.y = border_y - anchor_y;
+        res.v.y = 0.0f;
         res.is_aligned_d = true;
         res.aligned_y = border_y - res.height;
     }
