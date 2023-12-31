@@ -18,6 +18,11 @@ void BControlPlayer::Control(
     if (kbd_handler.Pressing(KeyCode::kRight)) {
         self.external_force += Vector2D(0.75f, 0.0f);
     }
+    if (self.r.x < -20.0f) {
+        self.r.x = 440.0f;
+    } else if (self.r.x > 440.0f) {
+        self.r.x = -20.0f;
+    }
     if (self.r.y > 340.0f) {
         self.r.y = -20.0f;
     }
@@ -148,6 +153,47 @@ void DetectCollisionDownward(
     }
 }
 
+void DetectCollisionLeftward(
+        EResource& res, const BMeetFieldBehavior& meet_field,
+        const Field& field) {
+    assert(res.v.x < 0.0f);
+    float anchor_x = res.r.x - 1.0f;
+    int s_col = static_cast<int>(std::floor(anchor_x / kGridUnit));
+    int e_col = static_cast<int>(std::floor((anchor_x + res.v.x) / kGridUnit));
+    float k1, k2;
+    int s_row, e_row;
+    bool collides = false;
+    for (int j = s_col; j >= e_col; --j) {
+        k1 = std::clamp(kGridUnit*j - anchor_x, res.v.x, 0.0f) / res.v.x;
+        k2 = std::clamp(kGridUnit*(j + 1) - anchor_x, res.v.x, 0.0f) / res.v.x;
+        if (res.v.y < 0.0f) {
+            s_row = static_cast<int>(
+                std::floor((res.r.y + k1*res.v.y) / kGridUnit)
+            );
+            e_row = static_cast<int>(
+                std::floor((res.r.y + k2*res.v.y + res.height - 1) / kGridUnit)
+            );
+        } else {
+            s_row = static_cast<int>(
+                std::floor((res.r.y + k2*res.v.y) / kGridUnit)
+            );
+            e_row = static_cast<int>(
+                std::floor((res.r.y + k1*res.v.y + res.height - 1) / kGridUnit)
+            );
+        }
+        for (int i = s_row; i <= e_row; ++i) {
+            collides = meet_field.MeetField(
+                res, field, Direction::kLeft, i, j);
+            if (collides) {
+                break;
+            }
+        }
+        if (collides) {
+            break;
+        }
+    }
+}
+
 void DetectCollisionRightward(
         EResource& res, const BMeetFieldBehavior& meet_field,
         const Field& field) {
@@ -201,7 +247,7 @@ void BDetectCollision::DetectCollision(
         DetectCollisionDownward(self, meet_field, field);
     }
     if (self.v.x < 0.0f) {
-        //
+        DetectCollisionLeftward(self, meet_field, field);
     } else if (self.v.x > 0.0f) {
         DetectCollisionRightward(self, meet_field, field);
     }
