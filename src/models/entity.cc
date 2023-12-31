@@ -119,14 +119,14 @@ void DetectCollisionDownward(
                 std::floor((res.r.x + k1*res.v.x) / kGridUnit)
             );
             e_col = static_cast<int>(
-                std::floor((res.r.x + k2*res.v.x + res.width) / kGridUnit)
+                std::floor((res.r.x + k2*res.v.x + res.width - 1) / kGridUnit)
             );
         } else {
             s_col = static_cast<int>(
                 std::floor((res.r.x + k2*res.v.x) / kGridUnit)
             );
             e_col = static_cast<int>(
-                std::floor((res.r.x + k1*res.v.x + res.width) / kGridUnit)
+                std::floor((res.r.x + k1*res.v.x + res.width - 1) / kGridUnit)
             );
         }
         for (int j = s_col; j <= e_col; ++j) {
@@ -160,14 +160,14 @@ void DetectCollisionRightward(
                 std::floor((res.r.y + k1*res.v.y) / kGridUnit)
             );
             e_row = static_cast<int>(
-                std::floor((res.r.y + k2*res.v.y + res.height) / kGridUnit)
+                std::floor((res.r.y + k2*res.v.y + res.height - 1) / kGridUnit)
             );
         } else {
             s_row = static_cast<int>(
                 std::floor((res.r.y + k2*res.v.y) / kGridUnit)
             );
             e_row = static_cast<int>(
-                std::floor((res.r.y + k1*res.v.y + res.height) / kGridUnit)
+                std::floor((res.r.y + k1*res.v.y + res.height - 1) / kGridUnit)
             );
         }
         for (int i = s_row; i <= e_row; ++i) {
