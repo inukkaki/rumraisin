@@ -128,6 +128,14 @@ bool BMeetField::MeetField(
 
 namespace {
 
+int CalcBoundingPos(
+        float origin, float k, float delta, float offset,
+        float marginal_term) {
+    return static_cast<int>(
+        std::floor((origin + k*delta + offset + marginal_term) / kGridUnit)
+    );
+}
+
 void DetectCollisionDownward(
         EResource& res, const BMeetFieldBehavior& meet_field,
         const Field& field) {
@@ -142,19 +150,11 @@ void DetectCollisionDownward(
         k1 = std::clamp(kGridUnit*(i + 1) - anchor_y, 0.0f, res.v.y) / res.v.y;
         k2 = std::clamp(kGridUnit*i - anchor_y, 0.0f, res.v.y) / res.v.y;
         if (res.v.x < 0.0f) {
-            s_col = static_cast<int>(
-                std::floor((res.r.x + k1*res.v.x) / kGridUnit)
-            );
-            e_col = static_cast<int>(
-                std::floor((res.r.x + k2*res.v.x + res.width - 1) / kGridUnit)
-            );
+            s_col = CalcBoundingPos(res.r.x, k1, res.v.x, 0.0f, 0.0f);
+            e_col = CalcBoundingPos(res.r.x, k2, res.v.x, res.width, -1.0f);
         } else {
-            s_col = static_cast<int>(
-                std::floor((res.r.x + k2*res.v.x) / kGridUnit)
-            );
-            e_col = static_cast<int>(
-                std::floor((res.r.x + k1*res.v.x + res.width - 1) / kGridUnit)
-            );
+            s_col = CalcBoundingPos(res.r.x, k2, res.v.x, 0.0f, 0.0f);
+            e_col = CalcBoundingPos(res.r.x, k1, res.v.x, res.width, -1.0f);
         }
         for (int j = s_col; j <= e_col; ++j) {
             collides = meet_field.MeetField(
@@ -183,19 +183,11 @@ void DetectCollisionLeftward(
         k1 = std::clamp(kGridUnit*j - anchor_x, res.v.x, 0.0f) / res.v.x;
         k2 = std::clamp(kGridUnit*(j + 1) - anchor_x, res.v.x, 0.0f) / res.v.x;
         if (res.v.y < 0.0f) {
-            s_row = static_cast<int>(
-                std::floor((res.r.y + k1*res.v.y) / kGridUnit)
-            );
-            e_row = static_cast<int>(
-                std::floor((res.r.y + k2*res.v.y + res.height - 1) / kGridUnit)
-            );
+            s_row = CalcBoundingPos(res.r.y, k1, res.v.y, 0.0f, 0.0f);
+            e_row = CalcBoundingPos(res.r.y, k2, res.v.y, res.height, -1.0f);
         } else {
-            s_row = static_cast<int>(
-                std::floor((res.r.y + k2*res.v.y) / kGridUnit)
-            );
-            e_row = static_cast<int>(
-                std::floor((res.r.y + k1*res.v.y + res.height - 1) / kGridUnit)
-            );
+            s_row = CalcBoundingPos(res.r.y, k2, res.v.y, 0.0f, 0.0f);
+            e_row = CalcBoundingPos(res.r.y, k1, res.v.y, res.height, -1.0f);
         }
         for (int i = s_row; i <= e_row; ++i) {
             collides = meet_field.MeetField(
@@ -224,19 +216,11 @@ void DetectCollisionRightward(
         k1 = std::clamp(kGridUnit*(j + 1) - anchor_x, 0.0f, res.v.x) / res.v.x;
         k2 = std::clamp(kGridUnit*j - anchor_x, 0.0f, res.v.x) / res.v.x;
         if (res.v.y < 0.0f) {
-            s_row = static_cast<int>(
-                std::floor((res.r.y + k1*res.v.y) / kGridUnit)
-            );
-            e_row = static_cast<int>(
-                std::floor((res.r.y + k2*res.v.y + res.height - 1) / kGridUnit)
-            );
+            s_row = CalcBoundingPos(res.r.y, k1, res.v.y, 0.0f, 0.0f);
+            e_row = CalcBoundingPos(res.r.y, k2, res.v.y, res.height, -1.0f);
         } else {
-            s_row = static_cast<int>(
-                std::floor((res.r.y + k2*res.v.y) / kGridUnit)
-            );
-            e_row = static_cast<int>(
-                std::floor((res.r.y + k1*res.v.y + res.height - 1) / kGridUnit)
-            );
+            s_row = CalcBoundingPos(res.r.y, k2, res.v.y, 0.0f, 0.0f);
+            e_row = CalcBoundingPos(res.r.y, k1, res.v.y, res.height, -1.0f);
         }
         for (int i = s_row; i <= e_row; ++i) {
             collides = meet_field.MeetField(
