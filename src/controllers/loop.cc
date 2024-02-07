@@ -10,6 +10,8 @@
 #include <iostream>
 #include "interfaces/graphics.h"
 #include "models/entity.h"
+#include "models/field.h"
+#include "models/tile.h"
 
 namespace {
 
@@ -46,14 +48,34 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
     float measured_frame_rate = 0.0f;
 
     // just for debugging
+    int window_scale = GetWindowScale();
+    //
     EResource res;
+    res.r.x = 100.0f;
+    res.r.y = 26.0f;
     res.width = 14.0f;
     res.height = 20.0f;
     res.mass = 10.0f;
     res.air_drag_coefficient = 0.2f;
     Entity test_entity(
-        res, kBControlPlayer, kBGetGravity, kBGetLinearAirDrag, kBUpdate);
+        res, kBControlPlayer, kBGetGravity, kBGetLinearAirDrag, kBAddForceToA,
+        kBAddAToV, kBMeetField, kBDetectCollision, kBAddVToRWithAligning);
     Vector2D test_g(0.0f, 0.1f);
+    //
+    TileId tile_id;
+    for (int index = 0; index < static_cast<int>(TileId::kMax); ++index) {
+        tile_id = static_cast<TileId>(index);
+        std::cout << "ID: " << index << ", "
+                  << GetTile(tile_id).debug_value << ", "
+                  << GetTile(tile_id).is_close_t << ", "
+                  << GetTile(tile_id).is_close_l << ", "
+                  << GetTile(tile_id).is_close_r << ", "
+                  << GetTile(tile_id).is_close_d << ", "
+                  << std::endl;
+    }
+    Field test_field;
+    test_field.Load();
+    InitFieldReferenceCount();
 
     // LOOP
     fr_balancer.SetTimer();
@@ -67,11 +89,17 @@ void MainLoop(bool& app_is_running, SDL_Renderer* const renderer) {
         SDL_RenderClear(renderer);
 
         // just for debugging
+        RenderFieldDebugInfo(renderer, test_field, window_scale);
+        //
         test_entity.Control(kbd_handler);
         test_entity.GetGravity(test_g);
         test_entity.GetAirDrag();
-        test_entity.Update();
-        RenderEntityDebugInfo(renderer, test_entity.res());
+        test_entity.UpdateA();
+        test_entity.UpdateV();
+        test_entity.DetectCollision(test_field);
+        test_entity.UpdateR();
+        //RenderEntityDebugInfo(renderer, test_entity.res(), window_scale);
+        RenderEntityCollisionInfo(renderer, test_entity.res(), window_scale);
 
         // Measure the frame rate
         if (fr_measurer.MeasureFrameRate(measured_frame_rate)) {

@@ -10,4 +10,6 @@ int GetWindowScale();
 
 const int& GetFrameRate();
 
+inline constexpr int kGridUnit = 16;
+
 #endif  // RUMRAISIN_INTERFACES_CONFIG_H_

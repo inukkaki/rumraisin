@@ -4,11 +4,17 @@
 #include "SDL2/SDL.h"
 
 #include "models/entity.h"
+#include "models/field.h"
 
-inline constexpr float kVelocityRenderScale = 10.0f;
-inline constexpr float kAccelerationRenderScale = 100.0f;
+inline constexpr float kVelocityRenderScale = 1.0f;
+inline constexpr float kAccelerationRenderScale = 60.0f;
 
 void RenderEntityDebugInfo(
-        SDL_Renderer* const renderer, const EResource& res);
+        SDL_Renderer* const renderer, const EResource& res, int window_scale);
+void RenderEntityCollisionInfo(
+        SDL_Renderer* const renderer, const EResource& res, int window_scale);
+
+void RenderFieldDebugInfo(
+        SDL_Renderer* const renderer, const Field& field, int window_scale);
 
 #endif  // RUMRAISIN_INTERFACES_GRAPHICS_H_
